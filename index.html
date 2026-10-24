@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MathLab — 62 problèmes de devoir</title>
+<style>
+:root {
+  --navy: #14213d;
+  --blue: #2563eb;
+  --cyan: #06b6d4;
+  --ink: #172033;
+  --muted: #64748b;
+  --paper: #f5f7fb;
+  --line: #e2e8f0;
+  --green: #0f766e;
+  --gold: #f59e0b;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: Inter, "Segoe UI", Arial, Helvetica, sans-serif;
+  line-height: 1.7;
+}
+.hero {
+  background:
+    radial-gradient(circle at 82% 22%, #2563eb55, transparent 28%),
+    radial-gradient(circle at 70% 90%, #06b6d433, transparent 30%),
+    linear-gradient(135deg, #101a32, #1e3a66 62%, #155e75);
+  color: #fff;
+  padding: 58px 22px 48px;
+  overflow: hidden;
+  position: relative;
+}
+.hero-inner {
+  max-width: 1150px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1.3fr .7fr;
+  gap: 35px;
+  align-items: center;
+}
+.eyebrow {
+  font-size: .78rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: #a5f3fc;
+  font-weight: 800;
+}
+h1 {
+  font-size: clamp(2.2rem, 5vw, 4.3rem);
+  line-height: 1.05;
+  margin: 14px 0 18px;
+  letter-spacing: -.045em;
+}
+.hero p { max-width: 680px; color: #e2e8f0; font-size: 1.05rem; }
+.hero-art {
+  max-width: 390px;
+  width: 100%;
+  justify-self: center;
+  opacity: .96;
+  filter: drop-shadow(0 16px 32px #02061740);
+  animation: float 5s ease-in-out infinite;
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-9px); }
+}
+.stats { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 25px; }
+.stat {
+  padding: 11px 16px;
+  border: 1px solid #ffffff35;
+  border-radius: 13px;
+  background: #ffffff12;
+  min-width: 105px;
+  backdrop-filter: blur(8px);
+}
+.stat b { display: block; font-size: 1.4rem; color: #fff; }
+.stat span { font-size: .78rem; color: #dbeafe; }
+.wrap { max-width: 1150px; margin: auto; padding: 30px 18px 70px; }
+.intro-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: -1px; }
+.info {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 22px;
+  box-shadow: 0 8px 24px #0f172a08;
+  transition: transform .2s, box-shadow .2s;
+}
+.info:hover { transform: translateY(-3px); box-shadow: 0 14px 30px #0f172a12; }
+.info .ico { font-size: 1.65rem; }
+.info h2 { font-size: 1.05rem; margin: 8px 0; color: var(--navy); }
+.info p { color: var(--muted); font-size: .91rem; margin: 0; }
+.section-title {
+  margin: 42px 0 17px;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: end;
+  flex-wrap: wrap;
+}
+.section-title h2 { font-size: 1.7rem; margin: 0; color: var(--navy); letter-spacing: -.025em; }
+.section-title p { margin: 4px 0 0; color: var(--muted); }
+.reminders { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+.reminder {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: 0 5px 18px #0f172a06;
+}
+.reminder h3 { margin: 0 0 8px; font-size: 1rem; color: var(--navy); }
+.reminder p { margin: 7px 0; color: #475569; }
+.formula {
+  font-family: "Cambria Math", Cambria, Georgia, serif;
+  background: #eff6ff;
+  color: #1d4ed8;
+  border-radius: 6px;
+  padding: 3px 8px;
+  overflow-wrap: anywhere;
+}
+.toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: #f8fafceF;
+  backdrop-filter: blur(14px);
+  border: 1px solid #dbe3ef;
+  border-radius: 14px;
+  padding: 12px;
+  display: flex;
+  gap: 9px;
+  flex-wrap: wrap;
+  align-items: center;
+  box-shadow: 0 6px 20px #0f172a0a;
+}
+.toolbar a {
+  display: inline-block;
+  text-decoration: none;
+  border-radius: 9px;
+  padding: 9px 13px;
+  font-size: .88rem;
+  font-weight: 750;
+  background: #eaf0fb;
+  color: #1e3a8a;
+  border: 1px solid #d6e2f5;
+  transition: background .18s, transform .18s, border-color .18s;
+}
+.toolbar a:hover { background: #dbeafe; border-color: #93c5fd; transform: translateY(-1px); }
+.toolbar .all { background: var(--blue); color: #fff; border-color: var(--blue); }
+.toolbar .all:hover { background: #1d4ed8; }
+.progress-note { color: var(--muted); font-size: .85rem; margin-left: auto; }
+.problem-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 17px; margin-top: 19px; }
+.problem {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 22px;
+  box-shadow: 0 5px 20px #0f172a08;
+  scroll-margin-top: 90px;
+  transition: transform .2s, box-shadow .2s, border-color .2s;
+}
+.problem:hover { transform: translateY(-3px); box-shadow: 0 13px 28px #0f172a12; border-color: #cbdcf8; }
+.problem-top { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; }
+.number { font-size: .73rem; letter-spacing: .12em; font-weight: 900; color: #64748b; }
+.tag { font-size: .7rem; border-radius: 100px; background: #eaf2ff; color: #1d4ed8; padding: 5px 10px; font-weight: 800; }
+.problem h3 { margin: 10px 0 14px; font-size: 1.17rem; line-height: 1.4; color: var(--navy); }
+.given { padding: 13px; background: #f8fafc; border-left: 4px solid var(--blue); border-radius: 7px; margin-bottom: 14px; }
+.questions { padding-left: 24px; margin: 0; }
+.questions li { padding: 4px 0 4px 3px; }
+.questions li::marker { color: var(--blue); font-weight: 800; }
+details { border-radius: 9px; margin-top: 13px; overflow: hidden; }
+summary {
+  cursor: pointer;
+  font-weight: 800;
+  list-style: none;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: background .18s;
+}
+summary::-webkit-details-marker { display: none; }
+summary:after { content: "＋"; margin-left: auto; font-size: 1.1rem; }
+details[open] summary:after { content: "−"; }
+.correction { background: #f0fdf9; border: 1px solid #b7eadb; }
+.correction summary { color: #0f766e; background: #e6faf4; }
+.correction summary:hover { background: #d4f5eb; }
+.solutions { padding: 0 18px 14px 38px; margin: 0; }
+.solutions li { padding: 7px 0; border-bottom: 1px solid #dceee8; }
+.solutions li:last-child { border: 0; }
+.solutions strong { color: #0f766e; }
+.hint { background: #fffbeb; border: 1px solid #fde68a; }
+.hint summary { color: #92400e; background: #fff7d6; }
+.hint summary:hover { background: #fef0b1; }
+.hint p { margin: 0; padding: 0 15px 14px; color: #78350f; }
+.problem[data-chapter="Problèmes mixtes difficiles"] { border-top: 4px solid #7c3aed; }
+.problem[data-chapter="Problèmes mixtes difficiles"] .tag { background: #f3e8ff; color: #6b21a8; }
+.graph-box { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+.graph-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 15px;
+  padding: 16px;
+  box-shadow: 0 5px 18px #0f172a06;
+}
+.graph-card h3 { margin: 0 0 10px; font-size: 1rem; color: var(--navy); }
+.graph-card svg { width: 100%; height: auto; display: block; }
+footer { background: #101a32; color: #cbd5e1; padding: 27px 18px; text-align: center; font-size: .9rem; }
+footer b { color: #fff; }
+@media (max-width: 800px) {
+  .hero-inner { grid-template-columns: 1fr; }
+  .hero-art { max-width: 270px; }
+  .intro-grid { grid-template-columns: 1fr; }
+  .problem-list, .reminders, .graph-box { grid-template-columns: 1fr; }
+  .progress-note { width: 100%; margin: 0; }
+  .hero { padding: 42px 20px 36px; }
+}
+@media (max-width: 480px) {
+  .wrap { padding: 22px 12px 45px; }
+  .problem, .info, .reminder { padding: 17px; }
+  .section-title h2 { font-size: 1.45rem; }
+  .toolbar a { font-size: .82rem; padding: 8px 10px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
+@media print {
+  body { background: #fff; }
+  .hero { padding: 20px; print-color-adjust: exact; }
+  .toolbar { display: none; }
+  .problem-list { display: block; }
+  .problem { break-inside: avoid; margin-bottom: 12px; box-shadow: none; }
+  .correction, .hint { display: block; }
+  .correction > summary, .hint > summary { border-bottom: 1px solid #ddd; }
+  .problem:hover { transform: none; }
+}
+</style>
+</head>
+<body>
+<header class="hero">
+ <div class="hero-inner">
+  <div>
+   <div class="eyebrow">Mathématiques · entraînement progressif</div>
+   <h1>MathLab<br>62 problèmes de devoir</h1>
+   <p>Un parcours progressif pour maîtriser <b>l’étude de fonction</b>, les <b>fonctions trigonométriques</b> et surtout les exercices qui mélangent les deux chapitres. Les derniers problèmes sont conçus pour un entraînement exigeant.</p>
+   <div class="stats"><div class="stat"><b>62</b><span>problèmes</span></div><div class="stat"><b>520</b><span>questions guidées</span></div><div class="stat"><b>2</b><span>chapitres</span></div></div>
+  </div>
+  <svg class="hero-art" viewBox="0 0 380 300" role="img" aria-label="Illustration mathématique avec axes et courbe">
+   <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#4ee2dc"/><stop offset="1" stop-color="#6885ff"/></linearGradient></defs>
+   <rect x="22" y="18" width="336" height="260" rx="24" fill="#ffffff12" stroke="#ffffff35"/>
+   <g stroke="#ffffff20" stroke-width="1"><path d="M55 55H330M55 95H330M55 135H330M55 175H330M55 215H330M95 40V250M135 40V250M175 40V250M215 40V250M255 40V250M295 40V250"/></g>
+   <path d="M45 155H338M190 250V38" stroke="#e4f4ff" stroke-width="2" stroke-linecap="round"/>
+   <path d="M331 149L340 155L331 161M184 47L190 37L196 47" fill="none" stroke="#e4f4ff" stroke-width="2"/>
+   <path d="M58 220 C100 220 118 185 140 155 S175 80 190 95 S220 220 240 205 S285 95 322 74" fill="none" stroke="url(#g)" stroke-width="5" stroke-linecap="round"/>
+   <circle cx="190" cy="95" r="6" fill="#ffca68"/><circle cx="240" cy="205" r="6" fill="#ffca68"/>
+   <text x="275" y="49" font-size="17" fill="#bdefff" font-family="Arial">f(x)</text><text x="325" y="177" font-size="13" fill="#fff" font-family="Arial">x</text><text x="202" y="47" font-size="13" fill="#fff" font-family="Arial">y</text>
+  </svg>
+ </div>
+</header>
+<main class="wrap">
+ <section class="intro-grid">
+  <div class="info"><div class="ico">🧭</div><h2>Progression réelle</h2><p>Les 50 premiers problèmes révisent les bases ; les 12 derniers mélangent les fonctions trigonométriques, les dérivées, les variations et les courbes.</p></div>
+  <div class="info"><div class="ico">✍️</div><h2>Mode devoir</h2><p>Lis les questions dans l’ordre, rédige tes calculs sur papier, puis ouvre la correction uniquement après avoir essayé.</p></div>
+  <div class="info"><div class="ico">📈</div><h2>Courbes et tableaux</h2><p>Des exercices demandent des tableaux de signes et de variations, des limites, des asymptotes, des intersections et des tracés dans un repère.</p></div>
+ </section>
+ <div class="section-title"><div><h2>Rappels de cours essentiels</h2><p>À relire avant de commencer les problèmes.</p></div></div>
+ <section class="reminders">
+  <div class="reminder"><h3>01 · Domaine et limites</h3><p>Un dénominateur doit être non nul. Pour une racine carrée, le radicande doit être positif ou nul.</p><p class="formula">lim x→±∞ 1/x = 0 ; lim x→0⁺ 1/x = +∞</p></div>
+  <div class="reminder"><h3>02 · Dérivées usuelles</h3><p class="formula">(xⁿ)′ = nxⁿ⁻¹ · (sin x)′ = cos x · (cos x)′ = −sin x</p><p>Si f′ est positive, f croît ; si f′ est négative, f décroît.</p></div>
+  <div class="reminder"><h3>03 · Tableau de variation</h3><p>Repérer les valeurs qui annulent f′, étudier son signe sur chaque intervalle, puis indiquer les variations et les extremums.</p></div>
+  <div class="reminder"><h3>04 · Trigonométrie</h3><p class="formula">sin²x + cos²x = 1 ; tan x = sin x / cos x</p><p>Sinus et cosinus ont pour période 2π. La tangente a pour période π et n’est pas définie lorsque cos x=0.</p></div>
+ </section>
+ <div class="section-title"><div><h2>Repères visuels</h2><p>Les tracés demandés dans les exercices se font à la main dans un repère.</p></div></div>
+ <section class="graph-box">
+  <div class="graph-card"><h3>Exemple de tableau de variation</h3>
+   <svg viewBox="0 0 360 180" aria-label="Exemple de tableau de variation">
+    <rect x="1" y="1" width="358" height="178" rx="10" fill="#fbfcff" stroke="#e0e6f2"/>
+    <path d="M70 18V160M70 18H340M70 82H340M70 160H340" stroke="#b7c3dc" stroke-width="1.4"/>
+    <text x="22" y="55" font-size="13" fill="#253453">x</text><text x="22" y="118" font-size="13" fill="#253453">f(x)</text>
+    <text x="86" y="42" font-size="12" fill="#253453">−∞</text><text x="195" y="42" font-size="12" fill="#253453">a</text><text x="310" y="42" font-size="12" fill="#253453">+∞</text>
+    <path d="M110 102L180 145L250 102" stroke="#315efb" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <path d="M173 139L180 145L183 136M243 109L250 102L241 99" stroke="#315efb" stroke-width="2" fill="none"/>
+    <text x="181" y="163" font-size="12" fill="#315efb">minimum</text>
+   </svg>
+  </div>
+  <div class="graph-card"><h3>Exemple de repère trigonométrique</h3>
+   <svg viewBox="0 0 360 180" aria-label="Repère trigonométrique">
+    <rect x="1" y="1" width="358" height="178" rx="10" fill="#fbfcff" stroke="#e0e6f2"/>
+    <circle cx="180" cy="90" r="57" fill="#edf2ff" stroke="#315efb" stroke-width="2"/>
+    <path d="M35 90H325M180 20V160" stroke="#64748b" stroke-width="1.5"/>
+    <path d="M318 85L326 90L318 95M175 28L180 20L185 28" stroke="#64748b" stroke-width="1.5" fill="none"/>
+    <path d="M180 90L220 49" stroke="#18a6b6" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="220" cy="49" r="4.5" fill="#18a6b6"/>
+    <text x="225" y="44" font-size="12" fill="#147482">M(cos x; sin x)</text>
+    <text x="309" y="108" font-size="12" fill="#253453">x</text><text x="189" y="28" font-size="12" fill="#253453">y</text>
+   </svg>
+  </div>
+ </section>
+ <div class="section-title"><div><h2>Les 50 problèmes</h2><p>Ouvre chaque correction après avoir répondu aux questions.</p></div></div>
+ <nav class="toolbar" aria-label="Navigation entre chapitres">
+  <a class="all" href="#p1">Problèmes 1–62</a><a href="#p1">Étude de fonction · 1–25</a><a href="#p26">Trigonométrie · 26–50</a><a href="#p51">Problèmes mixtes difficiles · 51–62</a>
+  <span class="progress-note">Astuce : Ctrl + P pour imprimer la page.</span>
+ </nav>
+ <section class="problem-list">
+
+    <article class="problem" id="p1" data-chapter="Étude de fonction">
+      <div class="problem-top"><span class="number">PROBLÈME 01</span><span class="tag">Étude de fonction</span></div>
+      <h3>Parabole — étude complète 1</h3>
+      <div class="given"><b>Donnée :</b> <span class="formula">f(x)=x²−2x+0</span></div>
+      <ol class="questions"><li>Déterminer Df.</li><li>Calculer f(0) puis f(1).</li><li>Mettre f sous forme canonique.</li><li>Calculer f′(x).</li><li>Résoudre f′(x)=0 et étudier les variations.</li><li>Donner le minimum et le sommet.</li><li>Résoudre f(x)=0 dans ℝ.</li><li>Dresser le tableau de variation et tracer la parabole.</li></ol>
+      <details class="correction"><summary>Voir la correction détaillée</summary><ol class="solutions"><li><strong>Q1.</strong> f est un polynôme, donc Df=ℝ.</li><li><strong>Q2.</strong> f(0)=0 et f(1)=-1.</li><li><strong>Q3.</strong> f(x)=(x−1)²+(-1).</li><li><strong>Q4.</strong> f′(x)=2x−2.</li><li><strong>Q5.</strong> f′(x)=0 ⇔ x=1. La fonction décroît jusqu’à x=1, puis croît.</li><li><strong>Q6.</strong> Minimum f(1)=-1. Sommet S(1 ; -1).</li><li><strong>Q7.</strong> (x−1)²=1, donc x=1±√(1).</li><li><strong>Q8.</strong> Tableau : +∞ ↘ -1 en x=1 ↗ +∞. Tracer une parabole ouverte vers le haut, de sommet S(1;-1).</li></ol></details>
+      <details class="hint"><summary>Rappel utile pour ce problème</summary><p>Polynôme : Df=ℝ ; f′(x)=2ax+b pour ax²+bx+c ; sommet d’abscisse −b/(2a).</p></details>
+    </article>
+    <article class="problem" id="p2" data-chapter="Étude de fonction">
+      <div class="problem-top"><span class="number">PROBLÈME 02</span><span class="tag">Étude de fonction</span></div>
+      <h3>Parabole — étude complète 2</h3>
+      <div class="given"><b>Donnée :</b> <span class="formula">f(x)=x²−4x+1</span></div>
+      <ol class="questions"><li>Déterminer Df.</li><li>Calculer f(0) puis f(1).</li><li>Mettre f sous forme canonique.</li><li>Calculer f′(x).</li><li>Résoudre f′(x)=0 et étudier les variations.</li><li>Donner le minimum et le sommet.</li><li>Résoudre f(x)=0 dans ℝ.</li><li>Dresser le tableau de variation et tracer la parabole.</li></ol>
+      <details class="correction"><summary>Voir la correction détaillée</summary><ol class="solutions"><li><strong>Q1.</strong> f est un polynôme, donc Df=ℝ.</li><li><strong>Q2.</strong> f(0)=1 et f(1)=-2.</li><li><strong>Q3.</strong> f(x)=(x−2)²+(-3).</li><li><strong>Q4.</strong> f′(x)=2x−4.</li><li><strong>Q5.</strong> f′(x)=0 ⇔ x=2. La fonction décroît jusqu’à x=2, puis croît.</li><li><strong>Q6.</strong> Minimum f(2)=-3. Sommet S(2 ; -3).</li><li><strong>Q7.</strong> (x−2)²=3, donc x=2±√(3).</li><li><strong>Q8.</strong> Tableau : +∞ ↘ -3 en x=2 ↗ +∞. Tracer une parabole ouverte vers le haut, de sommet S(2;-3).</li></ol></details>
+      <details class="hint"><summary>Rappel utile pour ce problème</summary><p>Polynôme : Df=ℝ ; f′(x)=2ax+b pour ax²+bx+c ; sommet d’abscisse −b/(2a).</p></details>
+    </article>
+    <article class="problem" id="p3" data-chapter="Étude de fonction">
+      <div class="problem-top"><span class="number">PROBLÈME 03</span><span class="tag">Étude de fonction</span></div>
+      <h3>Parabole — étude complète 3</h3>
+      <div class="given"><b>Donnée :</b> <span class="formula">f(x)=x²−2x+3</span></div>
+      <ol class="questions"><li>Déterminer Df.</li><li>Calculer f(0) puis f(1).</li><li>Mettre f sous forme canonique.</li><li>Calculer f′(x).</li><li>Résoudre f′(x)=0 et étudier les variations.</li><li>Donner le minimum et le sommet.</li><li>Résoudre f(x)=0 dans ℝ.</li><li>Dresser le tableau de variation et tracer la parabole.</li></ol>
+      <details class="correction"><summary>Voir la correction détaillée</summary><ol class="solutions"><li><strong>Q1.</strong> f est un polynôme, donc Df=ℝ.</li><li><strong>Q2.</strong> f(0)=3 et f(1)=2.</li><li><strong>Q3.</strong> f(x)=(x−1)²+(2).</li><li><strong>Q4.</strong> f′(x)=2x−2.</li><li><strong>Q5.</strong> f′(x)=0 ⇔ x=1. La fonction décroît jusqu’à x=1, puis croît.</li><li><strong>Q6.</strong> Minimum f(1)=2. Sommet S(1 ; 2).</li><li><strong>Q7.</strong> (x−1)²=-2, donc aucune solution réelle.</li><li><strong>Q8.</strong> Tableau : +∞ ↘ 2 en x=1 ↗ +∞. Tracer une parabole ouverte vers le haut, de sommet S(1;2).</li></ol></details>
+      <details class="hint"><summary>Rappel utile pour ce problème</summary><p>Polynôme : Df=ℝ ; f′(x)=2ax+b pour ax²+bx+c ; sommet d’abscisse −b/(2a).</p></details>
+    </article>
+    <article class="problem" id="p4" data-chapter="Étude de fonction">
+      <div class="problem-top"><span class="number">PROBLÈME 04</span><span class="tag">Étude de fonction</span></div>
+      <h3>Parabole — étude complète 4</h3>
+      <div class="given"><b>Donnée :</b> <span class="formula">f(x)=x²−6x+2</span></div>
+      <ol class="questions"><li>Déterminer Df.</li><li>Calculer f(0) puis f(1).</li><li>Mettre f sous forme canonique.</li><li>Calculer f′(x).</li><li>Résoudre f′(x)=0 et étudier les variations.</li><li>Donner le minimum et le sommet.</li><li>Résoudre f(x)=0 dans ℝ.</li><li>Dresser le tableau de variation et tracer la parabole.</li></ol>
+      <details class="correction"><summary>Voir la correction détaillée</summary><ol class="solutions"><li><strong>Q1.</strong> f est un polynôme, donc Df=ℝ.</li><li><strong>Q2.</strong> f(0)=2 et f(1)=-3.</li><li><strong>Q3.</strong> f(x)=(x−3)²+(-7).</li><li><strong>Q4.</strong> f′(x)=2x−6.</li><li><strong>Q5.</strong> f′(x)=0 ⇔ x=3. La fonction décroît jusqu’à x=3, puis croît.</li><li><strong>Q6.</strong> Minimum f(3)=-7. Sommet S(3 ; -7).</li><li><strong>Q7.</strong> (x−3)²=7, donc x=3±√(7).</li><li><strong>Q8.</strong> Tableau : +∞ ↘ -7 en x=3 ↗ +∞. Tracer une parabole ouverte vers le haut, de sommet S(3;-7).</li></ol></details>
+      <details class="hint"><summary>Rappel utile pour ce problème</summary><p>Polynôme : Df=ℝ ; f′(x)=2ax+b pour ax²+bx+c ; sommet d’abscisse −b/(2a).</p></details>
+    </article>
+    <article class="problem" id="p5" data-chapter="Étude de fonction">
+      <div class="problem-top"><span class="number">PROBLÈME 05</span><span class="tag">Étude de fonction</span></div>
+      <h3>Parabole — étude complète 5</h3>
+      <div class="given"><b>Donnée :</b> <span class="formula">f(x)=x²−4x+-2</span></div>
+      <ol class="questions"><li>Déterminer Df.</li><li>Calculer f(0) puis f(1).</li><li>Mettre f sous forme canonique.</li><li>Calculer f′(x).</li><li>Résoudre f′(x)=0 et étudier les variations.</li><li>Donner le minimum et le sommet.</li><li>Résoudre f(x)=0 dans ℝ.</li><li>Dresser le tableau de variation et tracer la parabole.</li></ol>
+      <details class="correction"><summary>Voir la correction détaillée</summary><ol class="solutions"><li><strong>Q1.</strong> f est un polynôme, donc Df=ℝ.</li><li><strong>Q2.</strong> f(0)=-2 et f(1)=-5.</li><li><strong>Q3.</strong> f(x)=(x−2)²+(-6).</li><li><strong>Q4.</strong> f′(x)=2x−4.</li><li><strong>Q5.</strong> f′(x)=0 ⇔ x=2. La fonction décroît jusqu’à x=2, puis croît.</li><li><strong>Q6.</strong> Minimum f(2)=-6. Sommet S(2 ; -6).</li><li><strong>Q7.</strong> (x−2)²=6, donc x=2±√(6).</li><li><strong>Q8.</strong> Tableau : +∞ ↘ -6 en x=2 ↗ +∞. Tracer une parabole ouverte vers le haut, de sommet S(2;-6).</li></ol></details>
+      <details class="hint"><summary>Rappel utile pour ce problème</summary><p>Polynôme : Df=ℝ ; f′(x)=2ax+b pour ax²+bx+c ; sommet d’abscisse −b/(2a).</p></details>
+    </article>
+    <article class="problem" id="p6" data-chapter="Étude de fonction">
+      <div class="problem-top"><span class="number">PROBLÈME 06</span><span class="tag">Étude de fonction</span></div>
+      <h3>Fonction affine 1</h3>
+      <div class="given"><b>Donnée :</b> <span class="formula">f(x)=2x + 1</span></div>
+      <ol class="questions"><li>Donner Df.</li><li>Calculer f(−1), f(0) et f(2).</li><li>Déterminer l’ordonnée à l’origine.</li><li>Résoudre f(x)=0.</li><li>Calculer le taux de variation entre 0 et 2.</li><li>Étudier le sens de variation.</li><li>Compléter le tableau pour x=−2, −1, 0, 1, 2.</li><li>Tracer la droite dans un repère.</li></ol>
+      <details class="correction"><summary>Voir la correction détaillée</summary><ol class="solutions"><li><strong>Q1.</strong> Fonction affine, donc Df=ℝ.</li><li><strong>Q2.</strong> f(−1)=-1, f(0)=1, f(2)=5.</li><li><strong>Q3.</strong> f(0)=1 : la droite coupe l’axe des ordonnées en (0;1).</li><li><strong>Q4.</strong> 2x+(1)=0 ⇔ x=-0.5.</li><li><strong>Q5.</strong> (f(2)−f(0))/2=(5−1)/2=2.</li><li><strong>Q6.</strong> Le coefficient directeur est positif : f est croissante.</li><li><strong>Q7.</strong> f(-2)=-3, f(-1)=-1, f(0)=1, f(1)=3, f(2)=5.</li><li><strong>Q8.</strong> Placer (0;1) et (1;3), puis tracer la droite.</li></ol></details>
+      <details class="hint"><summary>Rappel utile pour ce problème</summary><p>Pour f(x)=mx+c : f′(x)=m ; m&gt;0 ⇒ croissante, m&lt;0 ⇒ décroissante ; racine −c/m si m≠0.</p></details>
+    </article>
+    <article class="problem" id="p7" data-chapter="Étude de fonction">
+      <div class="problem-top"><span class="number">PROBLÈME 07</span><span class="tag">Étude de fonction</span></div>
+      <h3>Fonction affine 2</h3>
+      <div class="given"><b>Donnée :</b> <span class="formula">f(x)=-1x + 3</span></div>
+      <ol class="questions"><li>Donner Df.</li><li>Calculer f(−1), f(0) et f(2).</li><li>Déterminer l’ordonnée à l’origine.</li><li>Résoudre f(x)=0.</li><li>Calculer le taux de variation entre 0 et 2.</li><li>Étudier le sens de variation.</li><li>Compléter le tableau pour x=−2, −1, 0, 1, 2.</li><li>Tracer la droite dans un repère.</li></ol>
+      <details class="correction"><summary>Voir la correction détaillée</summary><ol class="solutions"><li><strong>Q1.</strong> Fonction affine, donc Df=ℝ.</li><li><strong>Q2.</strong> f(−1)=4, f(0)=3, f(2)=1.</li><li><strong>Q3.</strong> f(0)=3 : la droite coupe l’axe des ordonnées en (0;3).</li><li><strong>Q4.</strong> -1x+(3)=0 ⇔ x=3.</li><li><strong>Q5.</strong> (f(2)−f(0))/2=(1−3)/2=-1.</li><li><strong>Q6.</strong> Le coefficient directeur est négatif : f est décroissante.</li><li><strong>Q7.</strong> f(-2)=5, f(-1)=4, f(0)=3, f(1)=2, f(2)=1.</li><li><strong>Q8.</strong> Placer (0;3) et (1;2), puis tracer la droite.</li></ol></details>
+      <details class="hint"><summary>Rappel utile pour ce problème</summary><p>Pour f(x)=mx+c : f′(x)=m ; m&gt;0 ⇒ croissante, m&lt;0 ⇒ décroissante ; racine −c/m si m≠0.</p></details>
+    </article>
+    <article class="problem" id="p8" data-chapter="Étude de fonction">
+      <div class="problem-top"><span class="number">PROBLÈME 08</span><span class="tag">Étude de fonction</span></div>
+      <h3>Fonction affine 3</h3>
+      <div class="given"><b>Donnée :</b> <span class="formula">f(x)=3x − 2</span></div>
+      <ol class="questions"><li>Donner Df.</li><li>Calculer f(−1), f(0) et f(2).</li><li>Déterminer l’ordonnée à l’origine.</li><li>Résoudre f(x)=0.</li><li>Calculer le taux de variation entre 0 et 2.</li><li>Étudier le sens de variation.</li><li>Compléter le tableau pour x=−2, −1, 0, 1, 2.</li><li>Tracer la droite dans un repère.</li></ol>
+      <details class="correction"><summary>Voir la correction détaillée</summary><ol class="solutions"><li><strong>Q1.</strong> Fonction affine, donc Df=ℝ.</li><li><strong>Q2.</strong> f(−1)=-5, f(0)=-2, f(2)=4.</li><li><strong>Q3.</strong> f(0)=-2 : la droite coupe l’axe des ordonnées en (0;-2).</li><li><strong>Q4.</strong> 3x+(-2)=0 ⇔ x=0.666667.</li><li><strong>Q5.</strong> (f(2)−f(0))/2=(4−-2)/2=3.</li><li><strong>Q6.</strong> Le coefficient directeur est positif : f est croissante.</li><li><strong>Q7.</strong> f(-2)=-8, f(-1)=-5, f(0)=-2, f(1)=1, f(2)=4.</li><li><strong>Q8.</strong> Placer (0;-2) et (1;1), puis tracer la droite.</li></ol></details>
+      <details class="hint"><summary>Rappel utile pour ce problème</summary><p>Pour f(x)=mx+c : f′(x)=m ; m&gt;0 ⇒ croissante, m&lt;0 ⇒ décroissante ; racine −c/m si m≠0.</p></details>
+    </article>
+    <article class="problem" id="p9" data-chapter="Étude de fonction">
+      <div class="problem-top"><span class="number">PROBLÈME 09</span><span class="tag">Étude de fonction</span></div>
+      <h3>Fonction affine 4</h3>
+      <div class="given"><b>Donnée :</b> <span class="formula">f(x)=-2x − 1</span></div>
+      <ol class="questions"><li>Donner Df.</li><li>Calculer f(−1), f(0) et f(2).</li><li>Déterminer l’ordonnée à l’origine.</li><li>Résoudre f(x)=0.</li><li>Calculer le taux de variation entre 0 et 2.</li><li>Étudier le sens de variation.</li><li>Compléter le tableau pour x=−2, −1, 0, 1, 2.</li><li>Tracer la droite dans un repère.</li></ol>
+      <details class="correction"><summary>Voir la correction détaillée</summary><ol class="solutions"><li><strong>Q1.</strong> Fonction affine, donc Df=ℝ.</li><li><strong>Q2.</strong> f(−1)=1, f(0)=-1, f(2)=-5.</li><li><strong>Q3.</strong> f(0)=-1 : la droite coupe l’axe des ordonnées en (0;-1).</li><li><strong>Q4.</strong> -2x+(-1)=0 ⇔ x=-0.5.</li><li><strong>Q5.</strong> (f(2)−f(0))/2=(-5−-1)/2=-2.</li><li><strong>Q6.</strong> Le coefficient directeur est négatif : f est décroissante.</li><li><strong>Q7.</strong> f(-2)=3, f(-1)=1, f(0)=-1, f(1)=-3, f(2)=-5.</li><li><strong>Q8.</strong> Placer (0;-1) et (1;-3), puis tracer la droite.</li></ol></details>
+      <details class="hint"><summary>Rappel utile pour ce problème</summary><p>Pour f(x)=mx+c : f′(x)=m ; m&gt;0 ⇒ croissante, m&lt;0 ⇒ décroissante ; racine −c/m si m≠0.</p></details>
+    </article>
+    <article class="problem" id="p10" data-chapter="Étude de fonction">
+      <div class="problem-top"><span class="number">PROBLÈME 10</span><span class="tag">Étude de fonction</span></div>
+      <h3>Fonction affine 5</h3>
+      <div class="given"><b>Donnée :</b> <span class="formula">f(x)=1x − 4</span></div>
+      <ol class="questions"><li>Donner Df.</li><li>Calculer f(−1), f(0) et f(2).</li><li>Déterminer l’ordonnée à l’origine.</li><li>Résoudre f(x)=0.</li><li>Calculer le taux de variation entre 0 et 2.</li><li>Étudier le sens de variation.</li><li>Compléter le tableau pour x=−2, −1, 0, 1, 2.</li><li>Tracer la droite dans un repère.</li></ol>
+      <details class="correction"><summary>Voir la correction détaillée</summary><ol class="solutions"><li><strong>Q1.</strong> Fonction affine, donc Df=ℝ.</li><li><strong>Q2.</strong> f(−1)=-5, f(0)=-4, f(2)=-2.</li><li><strong>Q3.</strong> f(0)=-4 : la droite coupe l’axe des ordonnées en (0;-4).</li><li><strong>Q4.</strong> 1x+(-4)=0 ⇔ x=4.</li><li><strong>Q5.</strong> (f(2)−f(0))/2=(-2−-4)/2=1.</li><li><strong>Q6.</strong> Le coefficient directeur est positif : f est croissante.</li><li><strong>Q7.</strong> f(-2)=-6, f(-1)=-5, f(0)=-4, f(1)=-3, f(2)=-2.</li><li><strong>Q8.</strong> Placer (0;-4) et (1;-3), puis tracer la droite.</li></ol></details>
+      <details class="hint"><summary>Rappel utile pour ce problème</summary><p>Pour f(x)=mx+c : f′(x)=m ; m&gt;0 ⇒ croissante, m&lt;0 ⇒ décroissante ; racine −c/m si m≠0.</p></details>
+    </article>
+    <article class="problem" id="p11" data-chapter="Étude de fonction">
+      <div class="problem-top"><span class="number">PROBLÈME 11</span><span class="tag">Étude de fonction</span></div>
+      <h3>Fonction inverse 1</h3>
+      <div class="given"><b>Donnée :</b> <span class="formula">f(x)=1/x</span></div>
+      <ol class="questions"><li>Déterminer Df.</li><li>Calculer f(1), f(−1) et f(2).</li><li>Étudier le signe de f.</li><li>Calculer les limites en 0−, 0+ et à ±∞.</li><li>Calculer f′(x).</li><li>Étudier les variations.</li><li>Donner les asymptotes.</li><li>Faire un tableau de valeurs et tracer l’hyperbole.</li></ol>
+      <details class="correction"><summary>Voir la correction détaillée</summary><ol class="solutions"><li><strong>Q1.</strong> Df=ℝ\{0}, car le dénominateur ne peut pas être nul.</li><li><strong>Q2.</strong> f(1)=1, f(−1)=-1, f(2)=0.5.</li><li><strong>Q3.</strong> Le signe de k/x dépend de k et de x : si k&gt;0, même signe ; si k&lt;0, signes contraires.</li><li><strong>Q4.</strong> x→0+ : +∞ ; x→0− : −∞ ; x→±∞ : 0.</li><li><strong>Q5.</strong> f′(x)=−1/x².</li><li><strong>Q6.</strong> Comme x²&gt;0, f′ est négative : f décroît sur chaque intervalle.</li><li><strong>Q7.</strong> Asymptotes : x=0 verticale et y=0 horizontale.</li><li><strong>Q8.</strong> Points : (1;1), (−1;-1), (2;0.5), (−2;-0.5). Tracer les deux branches proches des axes.</li></ol></details>
+      <details class="hint"><summary>Rappel utile pour ce problème</summary><p>Pour f(x)=k/x : Df=ℝ\{0}, f′(x)=−k/x² ; asymptotes x=0 et y=0.</p></details>
+    </article>
+    <article class="problem" id="p12" data-chapter="Étude de fonction">
+      <div class="problem-top"><span class="number">PROBLÈME 12</span><span class="tag">Étude de fonction</span></div>
+      <h3>Fonction inverse 2</h3>
+      <div class="given"><b>Donnée :</b> <span class="formula">f(x)=2/x</span></div>
+      <ol class="questions"><li>Déterminer Df.</li><li>Calculer f(1), f(−1) et f(2).</li><li>Étudier le signe de f.</li><li>Calculer les limites en 0−, 0+ et à ±∞.</li><li>Calculer f′(x).</li><li>Étudier les variations.</li><li>Donner les asymptotes.</li><li>Faire un tableau de valeurs et tracer l’hyperbole.</li></ol>
+      <details class="correction"><summary>Voir la correction détaillée</summary><ol class="solutions"><li><strong>Q1.</strong> Df=ℝ\{0}, car le dénominateur ne peut pas être nul.</li><li><strong>Q2.</strong> f(1)=2, f(−1)=-2, f(2)=1.</li><li><strong>Q3.</strong> Le signe de k/x dépend de k et de x : si k&gt;0, même signe ; si k&lt;0, signes contraires.</li><li><strong>Q4.</strong> x→0+ : +∞ ; x→0− : −∞ ; x→±∞ : 0.</li><li><strong>Q5.</strong> f′(x)=−2/x².</li><li><strong>Q6.</strong> Comme x²&gt;0, f′ est négative : f décroît sur chaque intervalle.</li><li><strong>Q7.</strong> Asymptotes : x=0 verticale et y=0 horizontale.</li><li><strong>Q8.</strong> Points : (1;2), (−1;-2), (2;1), (−2;-1). Tracer les deux branches proches des axes.</li></ol></details>
+      <details class="hint"><summary>Rappel utile pour ce problème</summary><p>Pour f(x)=k/x : Df=ℝ\{0}, f′(x)=−k/x² ; asymptotes x=0 et y=0.</p></details>
+    </article>
+    <article class="problem" id="p13" data-chapter="Étude de fonction">
+      <div class="problem-top"><span class="number">PROBLÈME 13</span><span class="tag">Étude de fonction</span></div>
+      <h3>Fonction inverse 3</h3>
+      <div class="given"><b>Donnée :</b> <span class="formula">f(x)=-3/x</span></div>
+      <ol class="questions"><li>Déterminer Df.</li><li>Calculer f(1), f(−1) et f(2).</li><li>Étudier le signe de f.</li><li>Calculer les limites en 0−, 0+ et à ±∞.</li><li>Calculer f′(x).</li><li>Étudier les variations.</li><li>Donner les asymptotes.</li><li>Faire un tableau de valeurs et tracer l’hyperbole.</li></ol>
+      <details class="correction"><summary>Voir la correction détaillée</summary><ol class="solutions"><li><strong>Q1.</strong> Df=ℝ\{0}, car le dénominateur ne peut pas être nul.</li><li><strong>Q2.</strong> f(1)=-3, f(−1)=3, f(2)=-1.5.</li><li><strong>Q3.</strong> Le signe de k/x dépend de k et de x : si k&gt;0, même signe ; si k&lt;0, signes contraires.</li><li><strong>Q4.</strong> x→0+ : −∞ ; x→0− : +∞ ; x→±∞ : 0.</li><li><strong>Q5.</strong> f′(x)=−-3/x².</li><li><strong>Q6.</strong> Comme x²&gt;0, f′ est positive : f croît sur chaque intervalle.</li><li><strong>Q7.</strong> Asymptotes : x=0 verticale et y=0 horizontale.</li><li><strong>Q8.</strong> Points : (1;-3), (−1;3), (2;-1.5), (−2;1.5). Tracer les deux branches proches des axes.</li></ol></details>
+      <details class="hint"><summary>Rappel utile pour ce problème</summary><p>Pour f(x)=k/x : Df=ℝ\{0}, f′(x)=−k/x² ; asymptotes x=0 et y=0.</p></details>
+    </article>
+    <article class="problem" id="p14" data-chapter="Étude de fonction">
+      <div class="problem-top"><span class="number">PROBLÈME 14</span><span class="tag">Étude de fonction</span></div>
+      <h3>Fonction inverse 4</h3>
+      <div class="given"><b>Donnée :</b> <span class="formula">f(x)=4/x</span></div>
+      <ol class="questions"><li>Déterminer Df.</li><li>Calculer f(1), f(−1) et f(2).</li><li>Étudier le signe de f.</li><li>Calculer les limites en 0−, 0+ et à ±∞.</li><li>Calculer f′(x).</li><li>Étudier les variations.</li><li>Donner les asymptotes.</li><li>Faire un tableau de valeurs et tracer l’hyperbole.</li></ol>
+      <details class="correction"><summary>Voir la correction détaillée</summary><ol class="solutions"><li><strong>Q1.</strong> Df=ℝ\{0}, car le dénominateur ne peut pas être nul.</li><li><strong>Q2.</strong> f(1)=4, f(−1)=-4, f(2)=2.</li><li><strong>Q3.</strong> Le signe de k/x dépend de k et de x : si k&gt;0, même signe ; si k&lt;0, signes contraires.</li><li><strong>Q4.</strong> x→0+ : +∞ ; x→0− : −∞ ; x→±∞ : 0.</li><li><strong>Q5.</strong> f′(x)=−4/x².</li><li><strong>Q6.</strong> Comme x²&gt;0, f′ est négative : f décroît sur chaque intervalle.</li><li><strong>Q7.</strong> Asymptotes : x=0 verticale et y=0 horizontale.</li><li><strong>Q8.</strong> Points : (1;4), (−1;-4), (2;2), (−2;-2). Tracer les deux branches proches des axes.</li></ol></details>
+      <details class="hint"><summary>Rappel utile pour ce problème</summary><p>Pour f(x)=k/x : Df=ℝ\{0}, f′(x)=−k/x² ; asymptotes x=0 et y=0.</p></details>
+    </article>
+    <article class="problem" id="p15" data-chapter="Étude de fonction">
+      <div class="problem-top"><span class="number">PROBLÈME 15</span><span class="tag">Étude de fonction</span></div>
+      <h3>Fonction inverse 5</h3>
+      <div class="given"><b>Donnée :</b> <span class="formula">f(x)=-5/x</span></div>
+      <ol class="questions"><li>Déterminer Df.</li><li>Calculer f(1), f(−1) et f(2).</li><li>Étudier le signe de f.</li><li>Calculer les limites en 0−, 0+ et à ±∞.</li><li>Calculer f′(x).</li><li>Étudier les variations.</li><li>Donner les asymptotes.</li><li>Faire un tableau de valeurs et tracer l’hyperbole.</li></ol>
+      <details class="correction"><summary>Voir la correction détaillée</summary><ol class="solutions"><li><strong>Q1.</strong> Df=ℝ\{0}, car le dénominateur ne peut pas être nul.</li><li><strong>Q2.</strong> f(1)=-5, f(−1)=5, f(2)=-2.5.</li><li><strong>Q3.</strong> Le signe de k/x dépend de k et de x : si k&gt;0, même signe ; si k&lt;0, signes contraires.</li><li><strong>Q4.</strong> x→0+ : −∞ ; x→0− : +∞ ; x→±∞ : 0.</li><li><strong>Q5.</strong> f′(x)=−-5/x².</li><li><strong>Q6.</strong> Comme x²&gt;0, f′ est positive : f croît sur chaque intervalle.</li><li><strong>Q7.</strong> Asymptotes : x=0 verticale et y=0 horizontale.</li><li><strong>Q8.</strong> Points : (1;-5), (−1;5), (2;-2.5), (−2;2.5). Tracer les deux branches proches des axes.</li></ol></details>
+      <details class="hint"><summary>Rappel utile pour ce problème</summary><p>Pour f(x)=k/x : Df=ℝ\{0}, f′(x)=−k/x² ; asymptotes x=0 et y=0.</p></details>
+    </article>
+    <article class="problem" id="p16" data-chapter="Étude de fonction">
+      <div class="problem-top"><span class="number">PROBLÈME 16</span><span class="tag">Étude de fonction</span></div>
+      <h3>Fonction cubique 1</h3>
+      <div class="given"><b>Donnée :</b> <span class="formula">f(x)=x³−1x</span></div>
+      <ol class="questions"><li>Donner le domaine et étudier la parité.</li><li>Calculer f(0), f(1), f(−1).</li><li>Calculer f′(x).</li><li>Résoudre f′(x)=0.</li><li>Étudier le signe de f′ et les variations.</li><li>Résoudre f(x)=0.</li><li>Calculer f(−2), f(−1), f(0), f(1), f(2).</li><li>Construire le tableau de variation et tracer la courbe.</li></ol>
+      <details class="correction"><summary>Voir la correction détaillée</summary><ol class="solutions"><li><strong>Q1.</strong> Df=ℝ. f(−x)=−f(x), donc f est impaire.</li><li><strong>Q2.</strong> f(0)=0, f(1)=0, f(−1)=0.</li><li><strong>Q3.</strong> f′(x)=3x²−1.</li><li><strong>Q4.</strong> 3x²=1 ⇔ x=±√(1/3) ≈ ±0.577.</li><li><strong>Q5.</strong> f′&gt;0 si |x|&gt;0.577, f′&lt;0 si |x|&lt;0.577 : croissante, puis décroissante, puis croissante.</li><li><strong>Q6.</strong> x³−1x=x(x²−1)=0 ⇒ x=0 ou x=±√1.</li><li><strong>Q7.</strong> f(−2)=-6, f(−1)=0, f(0)=0, f(1)=0, f(2)=6.</li><li><strong>Q8.</strong> Points critiques x≈±0.577. La courbe en S passe par (0;0) et les racines ±√1.</li></ol></details>
+      <details class="hint"><summary>Rappel utile pour ce problème</summary><p>Pour x³−px : f′(x)=3x²−p ; factoriser x³−px=x(x²−p).</p></details>
+    </article>
+    <article class="problem" id="p17" data-chapter="Étude de fonction">
+      <div class="problem-top"><span class="number">PROBLÈME 17</span><span class="tag">Étude de fonction</span></div>
+      <h3>Fonction cubique 2</h3>
+      <div class="given"><b>Donnée :</b> <span class="formula">f(x)=x³−2x</span></div>
+      <ol class="questions"><li>Donner le domaine et étudier la parité.</li><li>Calculer f(0), f(1), f(−1).</li><li>Calculer f′(x).</li><li>Résoudre f′(x)=0.</li><li>Étudier le signe de f′ et les variations.</li><li>Résoudre f(x)=0.</li><li>Calculer f(−2), f(−1), f(0), f(1), f(2).</li><li>Construire le tableau de variation et tracer la courbe.</li></ol>
+      <details class="correction"><summary>Voir la correction détaillée</summary><ol class="solutions"><li><strong>Q1.</strong> Df=ℝ. f(−x)=−f(x), donc f est impaire.</li><li><strong>Q2.</strong> f(0)=0, f(1)=-1, f(−1)=1.</li><li><strong>Q3.</strong> f′(x)=3x²−2.</li><li><strong>Q4.</strong> 3x²=2 ⇔ x=±√(2/3) ≈ ±0.816.</li><li><strong>Q5.</strong> f′&gt;0 si |x|&gt;0.816, f′&lt;0 si |x|&lt;0.816 : croissante, puis décroissante, puis croissante.</li><li><strong>Q6.</strong> x³−2x=x(x²−2)=0 ⇒ x=0 ou x=±√2.</li><li><strong>Q7.</strong> f(−2)=-4, f(−1)=1, f(0)=0, f(1)=-1, f(2)=4.</li><li><strong>Q8.</strong> Points critiques x≈±0.816. La courbe en S passe par (0;0) et les racines ±√2.</li></ol></details>
+      <details class="hint"><summary>Rappel utile pour ce problème</summary><p>Pour x³−px : f′(x)=3x²−p ; factoriser x³−px=x(x²−p).</p></details>
+    </article>
+    <article class="problem" id="p18" data-chapter="Étude de fonction">
+      <div class="problem-top"><span class="number">PROBLÈME 18</span><span class="tag">Étude de fonction</span></div>
+      <h3>Fonction cubique 3</h3>
+      <div class="given"><b>Donnée :</b> <span class="formula">f(x)=x³−3x</span></div>
+      <ol class="questions"><li>Donner le domaine et étudier la parité.</li><li>Calculer f(0), f(1), f(−1).</li><li>Calculer f′(x).</li><li>Résoudre f′(x)=0.</li><li>Étudier le signe de f′ et les variations.</li><li>Résoudre f(x)=0.</li><li>Calculer f(−2), f(−1), f(0), f(1), f(2).</li><li>Construire le tableau de variation et tracer la courbe.</li></ol>
+      <details class="correction"><summary>Voir la correction détaillée</summary><ol class="solutions"><li><strong>Q1.</strong> Df=ℝ. f(−x)=−f(x), donc f est impaire.</li><li><strong>Q2.</strong> f(0)=0, f(1)=-2, f(−1)=2.</li><li><strong>Q3.</strong> f′(x)=3x²−3.</li><li><strong>Q4.</strong> 3x²=3 ⇔ x=±√(3/3) ≈ ±1.000.</li><li><strong>Q5.</strong> f′&gt;0 si |x|&gt;1.000, f′&lt;0 si |x|&lt;1.000 : croissante, puis décroissante, puis croissante.</li><li><strong>Q6.</strong> x³−3x=x(x²−3)=0 ⇒ x=0 ou x=±√3.</li><li><strong>Q7.</strong> f(−2)=-2, f(−1)=2, f(0)=0, f(1)=-2, f(2)=2.</li><li><strong>Q8.</strong> Points critiques x≈±1.000. La courbe en S passe par (0;0) et les racines ±√3.</li></ol></details>
+      <details class="hint"><summary>Rappel utile pour ce problème</summary><p>Pour x³−px : f′(x)=3x²−p ; factoriser x³−px=x(x²−p).</p></details>
+    </article>
+    <article class="problem" id="p19" data-chapter="Étude de fonction">
+      <div class="problem-top"><span class="number">PROBLÈME 19</span><span class="tag">Étude de fonction</span></div>
+      <h3>Fonction cubique 4</h3>
+      <div class="given"><b>Donnée :</b> <span class="formula">f(x)=x³−4x</span></div>
+      <ol class="questions"><li>Donner le domaine et étudier la parité.</li><li>Calculer f(0), f(1), f(−1).</li><li>Calculer f′(x).</li><li>Résoudre f′(x)=0.</li><li>Étudier le signe de f′ et les variations.</li><li>Résoudre f(x)=0.</li><li>Calculer f(−2), f(−1), f(0), f(1), f(2).</li><li>Construire le tableau de variation et tracer la courbe.</li></ol>
+      <details class="correction"><summary>Voir la correction détaillée</summary><ol class="solutions"><li><strong>Q1.</strong> Df=ℝ. f(−x)=−f(x), donc f est impaire.</li><li><strong>Q2.</strong> f(0)=0, f(1)=-3, f(−1)=3.</li><li><strong>Q3.</strong> f′(x)=3x²−4.</li><li><strong>Q4.</strong> 3x²=4 ⇔ x=±√(4/3) ≈ ±1.155.</li><li><strong>Q5.</strong> f′&gt;0 si |x|&gt;1.155, f′&lt;0 si |x|&lt;1.155 : croissante, puis décroissante, puis croissante.</li><li><strong>Q6.</strong> x³−4x=x(x²−4)=0 ⇒ x=0 ou x=±√4.</li><li><strong>Q7.</strong> f(−2)=0, f(−1)=3, f(0)=0, f(1)=-3, f(2)=0.</li><li><strong>Q8.</strong> Points critiques x≈±1.155. La courbe en S passe par (0;0) et les racines ±√4.</li></ol></details>
+      <details class="hint"><summary>Rappel utile pour ce problème</summary><p>Pour x³−px : f′(x)=3x²−p ; factoriser x³−px=x(x²−p).</p></details>
+    </article>
+    <article class="problem" id="p20" data-chapter="Étude de fonction">
+      <div class="problem-top"><span class="number">PROBLÈME 20</span><span class="tag">Étude de fonction</span></div>
+      <h3>Fonction cubique 5</h3>
+      <div class="given"><b>Donnée :</b> <span class="formula">f(x)=x³−5x</span></div>
+      <ol class="questions"><li>Donner le domaine et étudier la parité.</li><li>Calculer f(0), f(1), f(−1).</li><li>Calculer f′(x).</li><li>Résoudre f′(x)=0.</li><li>Étudier le signe de f′ et les variations.</li><li>Résoudre f(x)=0.</li><li>Calculer f(−2), f(−1), f(0), f(1), f(2).</li><li>Construire le tableau de variation et tracer la courbe.</li></ol>
+      <details class="correction"><summary>Voir la correction détaillée</summary><ol class="solutions"><li><strong>Q1.</strong> Df=ℝ. f(−x)=−f(x), donc f est impaire.</li><li><strong>Q2.</strong> f(0)=0, f(1)=-4, f(−1)=4.</li><li><strong>Q3.</strong> f′(x)=3x²−5.</li><li><strong>Q4.</strong> 3x²=5 ⇔ x=±√(5/3) ≈ ±1.291.</li><li><strong>Q5.</strong> f′&gt;0 si |x|&gt;1.291, f′&lt;0 si |x|&lt;1.291 : croissante, puis décroissante, puis croissante.</li><li><strong>Q6.</strong> x³−5x=x(x²−5)=0 ⇒ x=0 ou x=±√5.</li><li><strong>Q7.</strong> f(−2)=2, f(−1)=4, f(0)=0, f(1)=-4, f(2)=-2.</li><li><strong>Q8.</strong> Points critiques x≈±1.291. La courbe en S passe par (0;0) et les racines ±√5.</li></ol></details>
+      <details class="hint"><summary>Rappel utile pour ce problème</summary><p>Pour x³−px : f′(x)=3x²−p ; factoriser x³−px=x(x²−p).</p></details>
+    </article>
+    <article class="problem" id="p21" data-chapter="Étude de fonction">
+      <div class="problem-top"><span class="number">PROBLÈME 21</span><span class="tag">Étude de fonction</span></div>
+      <h3>Fonction rationnelle 1</h3>
+      <div class="given"><b>Donnée :</b> <span class="formula">f(x)=(x+1)/(x−(2))</span></div>
+      <ol class="questions"><li>Déterminer Df.</li><li>Calculer f(0) et f(1) si possible.</li><li>Résoudre f(x)=0.</li><li>Écrire f sous la forme 1+k/(x−b).</li><li>Calculer les limites en ±∞.</li><li>Calculer f′(x).</li><li>Étudier les variations selon le signe de f′.</li><li>Donner les asymptotes et tracer la courbe.</li></ol>
+      <details class="correction"><summary>Voir la correction détaillée</summary><ol class="solutions"><li><strong>Q1.</strong> Le dénominateur s’annule en x=2, donc Df=ℝ\{2}.</li><li><strong>Q2.</strong> f(0)=-0.5 ; f(1)=-2.</li><li><strong>Q3.</strong> f(x)=0 ⇔ x+1=0, donc x=−1.</li><li><strong>Q4.</strong> (x+1)/(x−(2))=1+(3)/(x−(2)).</li><li><strong>Q5.</strong> À +∞ et −∞, le terme k/(x−b) tend vers 0, donc f(x)→1.</li><li><strong>Q6.</strong> f′(x)=−3/(x−(2))².</li><li><strong>Q7.</strong> Le dénominateur au carré est positif : si k&gt;0, f′&lt;0 et f décroît ; si k&lt;0, f′&gt;0 et f croît.</li><li><strong>Q8.</strong> Asymptotes : x=2 verticale et y=1 horizontale. La courbe coupe l’axe des abscisses en (−1;0).</li></ol></details>
+      <details class="hint"><summary>Rappel utile pour ce problème</summary><p>Exclure les zéros du dénominateur. Pour (x+a)/(x−b), f′(x)=−(a+b)/(x−b)².</p></details>
+    </article>
+    <article class="problem" id="p22" data-chapter="Étude de fonction">
+      <div class="problem-top"><span class="number">PROBLÈME 22</span><span class="tag">Étude de fonction</span></div>
+      <h3>Fonction rationnelle 2</h3>
+      <div class="given"><b>Donnée :</b> <span class="formula">f(x)=(x+2)/(x−(1))</span></div>
+      <ol class="questions"><li>Déterminer Df.</li><li>Calculer f(0) et f(1) si possible.</li><li>Résoudre f(x)=0.</li><li>Écrire f sous la forme 1+k/(x−b).</li><li>Calculer les limites en ±∞.</li><li>Calculer f′(x).</li><li>Étudier les variations selon le signe de f′.</li><li>Donner les asymptotes et tracer la courbe.</li></ol>
+      <details class="correction"><summary>Voir la correction détaillée</summary><ol class="solutions"><li><strong>Q1.</strong> Le dénominateur s’annule en x=1, donc Df=ℝ\{1}.</li><li><strong>Q2.</strong> f(0)=-2 ; f(1)=non définie.</li><li><strong>Q3.</strong> f(x)=0 ⇔ x+2=0, donc x=−2.</li><li><strong>Q4.</strong> (x+2)/(x−(1))=1+(3)/(x−(1)).</li><li><strong>Q5.</strong> À +∞ et −∞, le terme k/(x−b) tend vers 0, donc f(x)→1.</li><li><strong>Q6.</strong> f′(x)=−3/(x−(1))².</li><li><strong>Q7.</strong> Le dénominateur au carré est positif : si k&gt;0, f′&lt;0 et f décroît ; si k&lt;0, f′&gt;0 et f croît.</li><li><strong>Q8.</strong> Asymptotes : x=1 verticale et y=1 horizontale. La courbe coupe l’axe des abscisses en (−2;0).</li></ol></details>
+      <details class="hint"><summary>Rappel utile pour ce problème</summary><p>Exclure les zéros du dénominateur. Pour (x+a)/(x−b), f′(x)=−(a+b)/(x−b)².</p></details>
+    </article>
+    <article class="problem" id="p23" data-chapter="Étude de fonction">
+      <div class="problem-top"><span class="number">PROBLÈME 23</span><span class="tag">Étude de fonction</span></div>
+      <h3>Fonction rationnelle 3</h3>
+      <div class="given"><b>Donnée :</b> <span class="formula">f(x)=(x+3)/(x−(2))</span></div>
+      <ol class="questions"><li>Déterminer Df.</li><li>Calculer f(0) et f(1) si possible.</li><li>Résoudre f(x)=0.</li><li>Écrire f sous la forme 1+k/(x−b).</li><li>Calculer les limites en ±∞.</li><li>Calculer f′(x).</li><li>Étudier les variations selon le signe de f′.</li><li>Donner les asymptotes et tracer la courbe.</li></ol>
+      <details class="correction"><summary>Voir la correction détaillée</summary><ol class="solutions"><li><strong>Q1.</strong> Le dénominateur s’annule en x=2, donc Df=ℝ\{2}.</li><li><strong>Q2.</strong> f(0)=-1.5 ; f(1)=-4.</li><li><strong>Q3.</strong> f(x)=0 ⇔ x+3=0, donc x=−3.</li><li><strong>Q4.</strong> (x+3)/(x−(2))=1+(5)/(x−(2)).</li><li><strong>Q5.</strong> À +∞ et −∞, le terme k/(x−b) tend vers 0, donc f(x)→1.</li><li><strong>Q6.</strong> f′(x)=−5/(x−(2))².</li><li><strong>Q7.</strong> Le dénominateur au carré est positif : si k&gt;0, f′&lt;0 et f décroît ; si k&lt;0, f′&gt;0 et f croît.</li><li><strong>Q8.</strong> Asymptotes : x=2 verticale et y=1 horizontale. La courbe coupe l’axe des abscisses en (−3;0).</li></ol></details>
+      <details class="hint"><summary>Rappel utile pour ce problème</summary><p>Exclure les zéros du dénominateur. Pour (x+a)/(x−b), f′(x)=−(a+b)/(x−b)².</p></details>
+    </article>
+    <article class="problem" id="p24" data-chapter="Étude de fonction">
+      <div class="problem-top"><span class="number">PROBLÈME 24</span><span class="tag">Étude de fonction</span></div>
+      <h3>Fonction rationnelle 4</h3>
+      <div class="given"><b>Donnée :</b> <span class="formula">f(x)=(x+1)/(x−(-1))</span></div>
+      <ol class="questions"><li>Déterminer Df.</li><li>Calculer f(0) et f(1) si possible.</li><li>Résoudre f(x)=0.</li><li>Écrire f sous la forme 1+k/(x−b).</li><li>Calculer les limites en ±∞.</li><li>Calculer f′(x).</li><li>Étudier les variations selon le signe de f′.</li><li>Donner les asymptotes et tracer la courbe.</li></ol>
+      <details class="correction"><summary>Voir la correction détaillée</summary><ol class="solutions"><li><strong>Q1.</strong> Le dénominateur s’annule en x=-1, donc Df=ℝ\{-1}.</li><li><strong>Q2.</strong> f(0)=1 ; f(1)=1.</li><li><strong>Q3.</strong> f(x)=0 ⇔ x+1=0, donc x=−1.</li><li><strong>Q4.</strong> (x+1)/(x−(-1))=1+(0)/(x−(-1)).</li><li><strong>Q5.</strong> À +∞ et −∞, le terme k/(x−b) tend vers 0, donc f(x)→1.</li><li><strong>Q6.</strong> f′(x)=−0/(x−(-1))².</li><li><strong>Q7.</strong> Le dénominateur au carré est positif : si k&gt;0, f′&lt;0 et f décroît ; si k&lt;0, f′&gt;0 et f croît.</li><li><strong>Q8.</strong> Asymptotes : x=-1 verticale et y=1 horizontale. La courbe coupe l’axe des abscisses en (−1;0).</li></ol></details>
+      <details class="hint"><summary>Rappel utile pour ce problème</summary><p>Exclure les zéros du dénominateur. Pour (x+a)/(x−b), f′(x)=−(a+b)/(x−b)².</p></details>
+    </article>
+    <article class="problem" id="p25" data-chapter="Étude de fonction">
+      <div class="problem-top"><span class="number">PROBLÈME 25</span><span class="tag">Étude de fonction</span></div>
+      <h3>Fonction rationnelle 5</h3>
+      <div class="given"><b>Donnée :</b> <span class="formula">f(x)=(x+2)/(x−(-2))</span></div>
+      <ol class="questions"><li>Déterminer Df.</li><li>Calculer f(0) et f(1) si possible.</li><li>Résoudre f(x)=0.</li><li>Écrire f sous la forme 1+k/(x−b).</li><li>Calculer les limites en ±∞.</li><li>Calculer f′(x).</li><li>Étudier les variations selon le signe de f′.</li><li>Donner les asymptotes et tracer la courbe.</li></ol>
+      <details class="correction"><summary>Voir la correction détaillée</summary><ol class="solutions"><li><strong>Q1.</strong> Le dénominateur s’annule en x=-2, donc Df=ℝ\{-2}.</li><li><strong>Q2.</strong> f(0)=1 ; f(1)=1.</li><li><strong>Q3.</strong> f(x)=0 ⇔ x+2=0, donc x=−2.</li><li><strong>Q4.</strong> (x+2)/(x−(-2))=1+(0)/(x−(-2)).</li><li><strong>Q5.</strong> À +∞ et −∞, le terme k/(x−b) tend vers 0, donc f(x)→1.</li><li><strong>Q6.</strong> f′(x)=−0/(x−(-2))².</li><li><strong>Q7.</strong> Le dénominateur au carré est positif : si k&gt;0, f′&lt;0 et f décroît ; si k&lt;0, f′&gt;0 et f croît.</li><li><strong>Q8.</strong> Asymptotes : x=-2 verticale et y=1 horizontale. La courbe coupe l’axe des abscisses en (−2;0).</li></ol></details>
+      <details class="hint"><summary>Rappel utile pour ce problème</summary><p>Exclure les zéros du dénominateur. Pour (x+a)/(x−b), f′(x)=−(a+b)/(x−b)².</p></details>
+    </article>
+    <article class="problem" id="p26" data-chapter="Fonctions trigonométriques">
+      <div class="problem-top"><span class="number">PROBLÈME 26</span><span class="tag">Fonctions trigonométriques</span></div>
+      <h3>Cercle trigonométrique 1</h3>
+      <div class="given"><b>Donnée :</b> <span class="formula">x=π/6</span></div>
+      <ol class="questions"><li>Convertir 30° en radians.</li><li>Calculer sin(π/6), cos(π/6) et tan(π/6).</li><li>Placer l’angle sur le cercle trigonométrique.</li><li>Préciser le quadrant et les signes de sin et cos.</li><li>Vérifier sin²x+cos²x=1.</li><li>Donner un angle associé dans [0,2π[.</li><li>Résoudre sin(t)=sin(x) sur [0,2π[.</li><li>Résoudre cos(t)=cos(x) sur [0,2π[.</li></ol>
+      <details class="correction"><summary>Voir la correction détaillée</summary><ol class="solutions"><li><strong>Q1.</strong> 30°×π/180=π/6.</li><li><strong>Q2.</strong> sin(π/6)=1/2, cos(π/6)=√3/2, tan(π/6)=√3/3.</li><li><strong>Q3.</strong> Le point du cercle est M(cos x;sin x)=(√3/2;1/2).</li><li><strong>Q4.</strong> premier quadrant : les signes sont ceux indiqués par les coordonnées (√3/2;1/2).</li><li><strong>Q5.</strong> sin²x+cos²x=1, identité fondamentale.</li><li><strong>Q6.</strong> L’angle π/6 appartient déjà à [0,2π[.</li><li><strong>Q7.</strong> sin t=sin x ⇔ t=x+2kπ ou t=π−x+2kπ. Garder les valeurs dans [0,2π[.</li><li><strong>Q8.</strong> cos t=cos x ⇔ t=±x+2kπ. Dans [0,2π[, retenir x et 2π−x, sans doublon.</li></ol></details>
+      <details class="hint"><summary>Rappel utile pour ce problème</summary><p>M(cos x; sin x) sur le cercle unité ; sin²x+cos²x=1 ; tan x=sin x/cos x si cos x≠0.</p></details>
+    </article>
+    <article class="problem" id="p27" data-chapter="Fonctions trigonométriques">
+      <div class="problem-top"><span class="number">PROBLÈME 27</span><span class="tag">Fonctions trigonométriques</span></div>
+      <h3>Cercle trigonométrique 2</h3>
+      <div class="given"><b>Donnée :</b> <span class="formula">x=π/4</span></div>
+      <ol class="questions"><li>Convertir 45° en radians.</li><li>Calculer sin(π/4), cos(π/4) et tan(π/4).</li><li>Placer l’angle sur le cercle trigonométrique.</li><li>Préciser le quadrant et les signes de sin et cos.</li><li>Vérifier sin²x+cos²x=1.</li><li>Donner un angle associé dans [0,2π[.</li><li>Résoudre sin(t)=sin(x) sur [0,2π[.</li><li>Résoudre cos(t)=cos(x) sur [0,2π[.</li></ol>
+      <details class="correction"><summary>Voir la correction détaillée</summary><ol class="solutions"><li><strong>Q1.</strong> 45°×π/180=π/4.</li><li><strong>Q2.</strong> sin(π/4)=√2/2, cos(π/4)=√2/2, tan(π/4)=1.</li><li><strong>Q3.</strong> Le point du cercle est M(cos x;sin x)=(√2/2;√2/2).</li><li><strong>Q4.</strong> premier quadrant : les signes sont ceux indiqués par les coordonnées (√2/2;√2/2).</li><li><strong>Q5.</strong> sin²x+cos²x=1, identité fondamentale.</li><li><strong>Q6.</strong> L’angle π/4 appartient déjà à [0,2π[.</li><li><strong>Q7.</strong> sin t=sin x ⇔ t=x+2kπ ou t=π−x+2kπ. Garder les valeurs dans [0,2π[.</li><li><strong>Q8.</strong> cos t=cos x ⇔ t=±x+2kπ. Dans [0,2π[, retenir x et 2π−x, sans doublon.</li></ol></details>
+      <details class="hint"><summary>Rappel utile pour ce problème</summary><p>M(cos x; sin x) sur le cercle unité ; sin²x+cos²x=1 ; tan x=sin x/cos x si cos x≠0.</p></details>
+    </article>
+    <article class="problem" id="p28" data-chapter="Fonctions trigonométriques">
+      <div class="problem-top"><span class="number">PROBLÈME 28</span><span class="tag">Fonctions trigonométriques</span></div>
+      <h3>Cercle trigonométrique 3</h3>
+      <div class="given"><b>Donnée :</b> <span class="formula">x=π/3</span></div>
+      <ol class="questions"><li>Convertir 60° en radians.</li><li>Calculer sin(π/3), cos(π/3) et tan(π/3).</li><li>Placer l’angle sur le cercle trigonométrique.</li><li>Préciser le quadrant et les signes de sin et cos.</li><li>Vérifier sin²x+cos²x=1.</li><li>Donner un angle associé dans [0,2π[.</li><li>Résoudre sin(t)=sin(x) sur [0,2π[.</li><li>Résoudre cos(t)=cos(x) sur [0,2π[.</li></ol>
+      <details class="correction"><summary>Voir la correction détaillée</summary><ol class="solutions"><li><strong>Q1.</strong> 60°×π/180=π/3.</li><li><strong>Q2.</strong> sin(π/3)=√3/2, cos(π/3)=1/2, tan(π/3)=√3.</li><li><strong>Q3.</strong> Le point du cercle est M(cos x;sin x)=(1/2;√3/2).</li><li><strong>Q4.</strong> premier quadrant : les signes sont ceux indiqués par les coordonnées (1/2;√3/2).</li><li><strong>Q5.</strong> sin²x+cos²x=1, identité fondamentale.</li><li><strong>Q6.</strong> L’angle π/3 appartient déjà à [0,2π[.</li><li><strong>Q7.</strong> sin t=sin x ⇔ t=x+2kπ ou t=π−x+2kπ. Garder les valeurs dans [0,2π[.</li><li><strong>Q8.</strong> cos t=cos x ⇔ t=±x+2kπ. Dans [0,2π[, retenir x et 2π−x, sans doublon.</li></ol></details>
+      <details class="hint"><summary>Rappel utile pour ce problème</summary><p>M(cos x; sin x) sur le cercle unité ; sin²x+cos²x=1 ; tan x=sin x/cos x si cos x≠0.</p></details>
+    </article>
+    <article class="problem" id="p29" data-chapter="Fonctions trigonométriques">
+      <div class="problem-top"><span class="number">PROBLÈME 29</span><span class="tag">Fonctions trigonométriques</span></div>
+      <h3>Cercle trigonométrique 4</h3>
+      <div class="given"><b>Donnée :</b> <span class="formula">x=π/2</span></div>
+      <ol class="questions"><li>Convertir 90° en radians.</li><li>Calculer sin(π/2), cos(π/2) et tan(π/2).</li><li>Placer l’angle sur le cercle trigonométrique.</li><li>Préciser le quadrant et les signes de sin et cos.</li><li>Vérifier sin²x+cos²x=1.</li><li>Donner un angle associé dans [0,2π[.</li><li>Résoudre sin(t)=sin(x) sur [0,2π[.</li><li>Résoudre cos(t)=cos(x) sur [0,2π[.</li></ol>
+      <details class="correction"><summary>Voir la correction détaillée</summary><ol class="solutions"><li><strong>Q1.</strong> 90°×π/180=π/2.</li><li><strong>Q2.</strong> sin(π/2)=1, cos(π/2)=0, tan(π/2)=non définie.</li><li><strong>Q3.</strong> Le point du cercle est M(cos x;sin x)=(0;1).</li><li><strong>Q4.</strong> axe vertical : les signes sont ceux indiqués par les coordonnées (0;1).</li><li><strong>Q5.</strong> sin²x+cos²x=1, identité fondamentale.</li><li><strong>Q6.</strong> L’angle π/2 appartient déjà à [0,2π[.</li><li><strong>Q7.</strong> sin t=sin x ⇔ t=x+2kπ ou t=π−x+2kπ. Garder les valeurs dans [0,2π[.</li><li><strong>Q8.</strong> cos t=cos x ⇔ t=±x+2kπ. Dans [0,2π[, retenir x et 2π−x, sans doublon.</li></ol></details>
+      <details class="hint"><summary>Rappel utile pour ce problème</summary><p>M(cos x; sin x) sur le cercle unité ; sin²x+cos²x=1 ; tan x=sin x/cos x si cos x≠0.</p></details>
+    </article>
+    <article class="problem" id="p30" data-chapter="Fonctions trigonométriques">
+      <div class="problem-top"><span class="number">PROBLÈME 30</span><span class="tag">Fonctions trigonométriques</span></div>
+      <h3>Cercle trigonométrique 5</h3>
+      <div class="given"><b>Donnée :</b> <span class="formula">x=2π/3</span></div>
+      <ol class="questions"><li>Convertir 120° en radians.</li><li>Calculer sin(2π/3), cos(2π/3) et tan(2π/3).</li><li>Placer l’angle sur le cercle trigonométrique.</li><li>Préciser le quadrant et les signes de sin et cos.</li><li>Vérifier sin²x+cos²x=1.</li><li>Donner un angle associé dans [0,2π[.</li><li>Résoudre sin(t)=sin(x) sur [0,2π[.</li><li>Résoudre cos(t)=cos(x) sur [0,2π[.</li></ol>
+      <details class="correction"><summary>Voir la correction détaillée</summary><ol class="solutions"><li><strong>Q1.</strong> 120°×π/180=2π/3.</li><li><strong>Q2.</strong> sin(2π/3)=√3/2, cos(2π/3)=−1/2, tan(2π/3)=−√3.</li><li><strong>Q3.</strong> Le point du cercle est M(cos x;sin x)=(−1/2;√3/2).</li><li><strong>Q4.</strong> deuxième quadrant : les signes sont ceux indiqués par les coordonnées (−1/2;√3/2).</li><li><strong>Q5.</strong> sin²x+cos²x=1, identité fondamentale.</li><li><strong>Q6.</strong> L’angle 2π/3 appartient déjà à [0,2π[.</li><li><strong>Q7.</strong> sin t=sin x ⇔ t=x+2kπ ou t=π−x+2kπ. Garder les valeurs dans [0,2π[.</li><li><strong>Q8.</strong> cos t=cos x ⇔ t=±x+2kπ. Dans [0,2π[, retenir x et 2π−x, sans doublon.</li></ol></details>
+      <details class="hint"><summary>Rappel utile pour ce problème</summary><p>M(cos x; sin x) sur le cercle unité ; sin²x+cos²x=1 ; tan x=sin x/cos x si cos x≠0.</p></details>
+    </article>
+    <article class="problem" id="p31" data-chapter="Fonctions trigonométriques">
+      <div class="problem-top"><span class="number">PROBLÈME 31</span><span class="tag">Fonctions trigonométriques</span></div>
+      <h3>Identités et équations 1</h3>
+      <div class="given"><b>Donnée :</b> <span class="formula">sin x=1/2</span></div>
+      <ol class="questions"><li>Rappeler l’identité fondamentale.</li><li>Si sin x=1/2, exprimer cos²x.</li><li>En supposant x dans le premier quadrant, déterminer cos x.</li><li>Exprimer tan x en fonction de sin x et cos x.</li><li>Calculer tan x si sin x=1/2 et cos x&gt;0.</li><li>Donner les solutions de sin x=1/2 sur [0,2π[.</li><li>Écrire les solutions générales de cette équation.</li><li>Expliquer comment placer les solutions sur le cercle.</li></ol>
+      <details class="correction"><summary>Voir la correction détaillée</summary><ol class="solutions"><li><strong>Q1.</strong> sin²x+cos²x=1.</li><li><strong>Q2.</strong> cos²x=1−(1/2)²=(3)/4.</li><li><strong>Q3.</strong> Dans le premier quadrant, cos x=√3/2.</li><li><strong>Q4.</strong> tan x=sin x/cos x, si cos x≠0.</li><li><strong>Q5.</strong> tan x=(1/2)/(√3/2)=1/√3.</li><li><strong>Q6.</strong> Poser α=arcsin(1/2) : x=α ou x=π−α sur [0,2π[.</li><li><strong>Q7.</strong> x=arcsin(1/2)+2kπ ou x=π−arcsin(1/2)+2kπ, k∈ℤ.</li><li><strong>Q8.</strong> Les solutions ont la même ordonnée sin x ; repérer les deux points du cercle ayant cette ordonnée.</li></ol></details>
+      <details class="hint"><summary>Rappel utile pour ce problème</summary><p>cos²x=1−sin²x ; le signe de cos x dépend du quadrant ; tan x=sin x/cos x.</p></details>
+    </article>
+    <article class="problem" id="p32" data-chapter="Fonctions trigonométriques">
+      <div class="problem-top"><span class="number">PROBLÈME 32</span><span class="tag">Fonctions trigonométriques</span></div>
+      <h3>Identités et équations 2</h3>
+      <div class="given"><b>Donnée :</b> <span class="formula">sin x=2/3</span></div>
+      <ol class="questions"><li>Rappeler l’identité fondamentale.</li><li>Si sin x=2/3, exprimer cos²x.</li><li>En supposant x dans le premier quadrant, déterminer cos x.</li><li>Exprimer tan x en fonction de sin x et cos x.</li><li>Calculer tan x si sin x=2/3 et cos x&gt;0.</li><li>Donner les solutions de sin x=2/3 sur [0,2π[.</li><li>Écrire les solutions générales de cette équation.</li><li>Expliquer comment placer les solutions sur le cercle.</li></ol>
+      <details class="correction"><summary>Voir la correction détaillée</summary><ol class="solutions"><li><strong>Q1.</strong> sin²x+cos²x=1.</li><li><strong>Q2.</strong> cos²x=1−(2/3)²=(5)/9.</li><li><strong>Q3.</strong> Dans le premier quadrant, cos x=√5/3.</li><li><strong>Q4.</strong> tan x=sin x/cos x, si cos x≠0.</li><li><strong>Q5.</strong> tan x=(2/3)/(√5/3)=2/√5.</li><li><strong>Q6.</strong> Poser α=arcsin(2/3) : x=α ou x=π−α sur [0,2π[.</li><li><strong>Q7.</strong> x=arcsin(2/3)+2kπ ou x=π−arcsin(2/3)+2kπ, k∈ℤ.</li><li><strong>Q8.</strong> Les solutions ont la même ordonnée sin x ; repérer les deux points du cercle ayant cette ordonnée.</li></ol></details>
+      <details class="hint"><summary>Rappel utile pour ce problème</summary><p>cos²x=1−sin²x ; le signe de cos x dépend du quadrant ; tan x=sin x/cos x.</p></details>
+    </article>
+    <article class="problem" id="p33" data-chapter="Fonctions trigonométriques">
+      <div class="problem-top"><span class="number">PROBLÈME 33</span><span class="tag">Fonctions trigonométriques</span></div>
+      <h3>Identités et équations 3</h3>
+      <div class="given"><b>Donnée :</b> <span class="formula">sin x=3/4</span></div>
+      <ol class="questions"><li>Rappeler l’identité fondamentale.</li><li>Si sin x=3/4, exprimer cos²x.</li><li>En supposant x dans le premier quadrant, déterminer cos x.</li><li>Exprimer tan x en fonction de sin x et cos x.</li><li>Calculer tan x si sin x=3/4 et cos x&gt;0.</li><li>Donner les solutions de sin x=3/4 sur [0,2π[.</li><li>Écrire les solutions générales de cette équation.</li><li>Expliquer comment placer les solutions sur le cercle.</li></ol>
+      <details class="correction"><summary>Voir la correction détaillée</summary><ol class="solutions"><li><strong>Q1.</strong> sin²x+cos²x=1.</li><li><strong>Q2.</strong> cos²x=1−(3/4)²=(7)/16.</li><li><strong>Q3.</strong> Dans le premier quadrant, cos x=√7/4.</li><li><strong>Q4.</strong> tan x=sin x/cos x, si cos x≠0.</li><li><strong>Q5.</strong> tan x=(3/4)/(√7/4)=3/√7.</li><li><strong>Q6.</strong> Poser α=arcsin(3/4) : x=α ou x=π−α sur [0,2π[.</li><li><strong>Q7.</strong> x=arcsin(3/4)+2kπ ou x=π−arcsin(3/4)+2kπ, k∈ℤ.</li><li><strong>Q8.</strong> Les solutions ont la même ordonnée sin x ; repérer les deux points du cercle ayant cette ordonnée.</li></ol></details>
+      <details class="hint"><summary>Rappel utile pour ce problème</summary><p>cos²x=1−sin²x ; le signe de cos x dépend du quadrant ; tan x=sin x/cos x.</p></details>
+    </article>
+    <article class="problem" id="p34" data-chapter="Fonctions trigonométriques">
+      <div class="problem-top"><span class="number">PROBLÈME 34</span><span class="tag">Fonctions trigonométriques</span></div>
+      <h3>Identités et équations 4</h3>
+      <div class="given"><b>Donnée :</b> <span class="formula">sin x=1/3</span></div>
+      <ol class="questions"><li>Rappeler l’identité fondamentale.</li><li>Si sin x=1/3, exprimer cos²x.</li><li>En supposant x dans le premier quadrant, déterminer cos x.</li><li>Exprimer tan x en fonction de sin x et cos x.</li><li>Calculer tan x si sin x=1/3 et cos x&gt;0.</li><li>Donner les solutions de sin x=1/3 sur [0,2π[.</li><li>Écrire les solutions générales de cette équation.</li><li>Expliquer comment placer les solutions sur le cercle.</li></ol>
+      <details class="correction"><summary>Voir la correction détaillée</summary><ol class="solutions"><li><strong>Q1.</strong> sin²x+cos²x=1.</li><li><strong>Q2.</strong> cos²x=1−(1/3)²=(8)/9.</li><li><strong>Q3.</strong> Dans le premier quadrant, cos x=√8/3.</li><li><strong>Q4.</strong> tan x=sin x/cos x, si cos x≠0.</li><li><strong>Q5.</strong> tan x=(1/3)/(√8/3)=1/√8.</li><li><strong>Q6.</strong> Poser α=arcsin(1/3) : x=α ou x=π−α sur [0,2π[.</li><li><strong>Q7.</strong> x=arcsin(1/3)+2kπ ou x=π−arcsin(1/3)+2kπ, k∈ℤ.</li><li><strong>Q8.</strong> Les solutions ont la même ordonnée sin x ; repérer les deux points du cercle ayant cette ordonnée.</li></ol></details>
+      <details class="hint"><summary>Rappel utile pour ce problème</summary><p>cos²x=1−sin²x ; le signe de cos x dépend du quadrant ; tan x=sin x/cos x.</p></details>
+    </article>
+    <article class="problem" id="p35" data-chapter="Fonctions trigonométriques">
+      <div class="problem-top"><span class="number">PROBLÈME 35</span><span class="tag">Fonctions trigonométriques</span></div>
+      <h3>Identités et équations 5</h3>
+      <div class="given"><b>Donnée :</b> <span class="formula">sin x=2/5</span></div>
+      <ol class="questions"><li>Rappeler l’identité fondamentale.</li><li>Si sin x=2/5, exprimer cos²x.</li><li>En supposant x dans le premier quadrant, déterminer cos x.</li><li>Exprimer tan x en fonction de sin x et cos x.</li><li>Calculer tan x si sin x=2/5 et cos x&gt;0.</li><li>Donner les solutions de sin x=2/5 sur [0,2π[.</li><li>Écrire les solutions générales de cette équation.</li><li>Expliquer comment placer les solutions sur le cercle.</li></ol>
+      <details class="correction"><summary>Voir la correction détaillée</summary><ol class="solutions"><li><strong>Q1.</strong> sin²x+cos²x=1.</li><li><strong>Q2.</strong> cos²x=1−(2/5)²=(21)/25.</li><li><strong>Q3.</strong> Dans le premier quadrant, cos x=√21/5.</li><li><strong>Q4.</strong> tan x=sin x/cos x, si cos x≠0.</li><li><strong>Q5.</strong> tan x=(2/5)/(√21/5)=2/√21.</li><li><strong>Q6.</strong> Poser α=arcsin(2/5) : x=α ou x=π−α sur [0,2π[.</li><li><strong>Q7.</strong> x=arcsin(2/5)+2kπ ou x=π−arcsin(2/5)+2kπ, k∈ℤ.</li><li><strong>Q8.</strong> Les solutions ont la même ordonnée sin x ; repérer les deux points du cercle ayant cette ordonnée.</li></ol></details>
+      <details class="hint"><summary>Rappel utile pour ce problème</summary><p>cos²x=1−sin²x ; le signe de cos x dépend du quadrant ; tan x=sin x/cos x.</p></details>
+    </article>
+    <article class="problem" id="p36" data-chapter="Fonctions trigonométriques">
+      <div class="problem-top"><span class="number">PROBLÈME 36</span><span class="tag">Fonctions trigonométriques</span></div>
+      <h3>Fonction tangente 1</h3>
+      <div class="given"><b>Donnée :</b> <span class="formula">tan x=√3/3</span></div>
+      <ol class="questions"><li>Donner le domaine de définition de tan.</li><li>Calculer tan de l’angle indiqué.</li><li>Rappeler la période de tan.</li><li>Résoudre tan x=0 sur [0,2π[.</li><li>Résoudre tan x=√3/3 sur [0,2π[.</li><li>Étudier le signe de tan selon les quadrants.</li><li>Donner les équations des asymptotes verticales.</li><li>Tracer une période de la courbe de tangente.</li></ol>
+      <details class="correction"><summary>Voir la correction détaillée</summary><ol class="solutions"><li><strong>Q1.</strong> Df=ℝ\{π/2+kπ ; k∈ℤ}, car cos x≠0.</li><li><strong>Q2.</strong> tan(π/6)=√3/3.</li><li><strong>Q3.</strong> La période est π : tan(x+π)=tan x.</li><li><strong>Q4.</strong> tan x=0 ⇔ x=0 ou x=π sur [0,2π[.</li><li><strong>Q5.</strong> Les solutions sont x=π/6+kπ ; retenir celles dans [0,2π[.</li><li><strong>Q6.</strong> tan est positive quand sin et cos ont le même signe, négative sinon.</li><li><strong>Q7.</strong> x=π/2+kπ, k∈ℤ.</li><li><strong>Q8.</strong> Sur ]−π/2,π/2[, la courbe croît, passe par (0;0), et tend vers −∞ et +∞ aux bords.</li></ol></details>
+      <details class="hint"><summary>Rappel utile pour ce problème</summary><p>tan x=sin x/cos x ; période π ; asymptotes x=π/2+kπ.</p></details>
+    </article>
+    <article class="problem" id="p37" data-chapter="Fonctions trigonométriques">
+      <div class="problem-top"><span class="number">PROBLÈME 37</span><span class="tag">Fonctions trigonométriques</span></div>
+      <h3>Fonction tangente 2</h3>
+      <div class="given"><b>Donnée :</b> <span class="formula">tan x=1</span></div>
+      <ol class="questions"><li>Donner le domaine de définition de tan.</li><li>Calculer tan de l’angle indiqué.</li><li>Rappeler la période de tan.</li><li>Résoudre tan x=0 sur [0,2π[.</li><li>Résoudre tan x=1 sur [0,2π[.</li><li>Étudier le signe de tan selon les quadrants.</li><li>Donner les équations des asymptotes verticales.</li><li>Tracer une période de la courbe de tangente.</li></ol>
+      <details class="correction"><summary>Voir la correction détaillée</summary><ol class="solutions"><li><strong>Q1.</strong> Df=ℝ\{π/2+kπ ; k∈ℤ}, car cos x≠0.</li><li><strong>Q2.</strong> tan(π/4)=1.</li><li><strong>Q3.</strong> La période est π : tan(x+π)=tan x.</li><li><strong>Q4.</strong> tan x=0 ⇔ x=0 ou x=π sur [0,2π[.</li><li><strong>Q5.</strong> Les solutions sont x=π/4+kπ ; retenir celles dans [0,2π[.</li><li><strong>Q6.</strong> tan est positive quand sin et cos ont le même signe, négative sinon.</li><li><strong>Q7.</strong> x=π/2+kπ, k∈ℤ.</li><li><strong>Q8.</strong> Sur ]−π/2,π/2[, la courbe croît, passe par (0;0), et tend vers −∞ et +∞ aux bords.</li></ol></details>
+      <details class="hint"><summary>Rappel utile pour ce problème</summary><p>tan x=sin x/cos x ; période π ; asymptotes x=π/2+kπ.</p></details>
+    </article>
+    <article class="problem" id="p38" data-chapter="Fonctions trigonométriques">
+      <div class="problem-top"><span class="number">PROBLÈME 38</span><span class="tag">Fonctions trigonométriques</span></div>
+      <h3>Fonction tangente 3</h3>
+      <div class="given"><b>Donnée :</b> <span class="formula">tan x=√3</span></div>
+      <ol class="questions"><li>Donner le domaine de définition de tan.</li><li>Calculer tan de l’angle indiqué.</li><li>Rappeler la période de tan.</li><li>Résoudre tan x=0 sur [0,2π[.</li><li>Résoudre tan x=√3 sur [0,2π[.</li><li>Étudier le signe de tan selon les quadrants.</li><li>Donner les équations des asymptotes verticales.</li><li>Tracer une période de la courbe de tangente.</li></ol>
+      <details class="correction"><summary>Voir la correction détaillée</summary><ol class="solutions"><li><strong>Q1.</strong> Df=ℝ\{π/2+kπ ; k∈ℤ}, car cos x≠0.</li><li><strong>Q2.</strong> tan(π/3)=√3.</li><li><strong>Q3.</strong> La période est π : tan(x+π)=tan x.</li><li><strong>Q4.</strong> tan x=0 ⇔ x=0 ou x=π sur [0,2π[.</li><li><strong>Q5.</strong> Les solutions sont x=π/3+kπ ; retenir celles dans [0,2π[.</li><li><strong>Q6.</strong> tan est positive quand sin et cos ont le même signe, négative sinon.</li><li><strong>Q7.</strong> x=π/2+kπ, k∈ℤ.</li><li><strong>Q8.</strong> Sur ]−π/2,π/2[, la courbe croît, passe par (0;0), et tend vers −∞ et +∞ aux bords.</li></ol></details>
+      <details class="hint"><summary>Rappel utile pour ce problème</summary><p>tan x=sin x/cos x ; période π ; asymptotes x=π/2+kπ.</p></details>
+    </article>
+    <article class="problem" id="p39" data-chapter="Fonctions trigonométriques">
+      <div class="problem-top"><span class="number">PROBLÈME 39</span><span class="tag">Fonctions trigonométriques</span></div>
+      <h3>Fonction tangente 4</h3>
+      <div class="given"><b>Donnée :</b> <span class="formula">tan x=−√3/3</span></div>
+      <ol class="questions"><li>Donner le domaine de définition de tan.</li><li>Calculer tan de l’angle indiqué.</li><li>Rappeler la période de tan.</li><li>Résoudre tan x=0 sur [0,2π[.</li><li>Résoudre tan x=−√3/3 sur [0,2π[.</li><li>Étudier le signe de tan selon les quadrants.</li><li>Donner les équations des asymptotes verticales.</li><li>Tracer une période de la courbe de tangente.</li></ol>
+      <details class="correction"><summary>Voir la correction détaillée</summary><ol class="solutions"><li><strong>Q1.</strong> Df=ℝ\{π/2+kπ ; k∈ℤ}, car cos x≠0.</li><li><strong>Q2.</strong> tan(5π/6)=−√3/3.</li><li><strong>Q3.</strong> La période est π : tan(x+π)=tan x.</li><li><strong>Q4.</strong> tan x=0 ⇔ x=0 ou x=π sur [0,2π[.</li><li><strong>Q5.</strong> Les solutions sont x=5π/6+kπ ; retenir celles dans [0,2π[.</li><li><strong>Q6.</strong> tan est positive quand sin et cos ont le même signe, négative sinon.</li><li><strong>Q7.</strong> x=π/2+kπ, k∈ℤ.</li><li><strong>Q8.</strong> Sur ]−π/2,π/2[, la courbe croît, passe par (0;0), et tend vers −∞ et +∞ aux bords.</li></ol></details>
+      <details class="hint"><summary>Rappel utile pour ce problème</summary><p>tan x=sin x/cos x ; période π ; asymptotes x=π/2+kπ.</p></details>
+    </article>
+    <article class="problem" id="p40" data-chapter="Fonctions trigonométriques">
+      <div class="problem-top"><span class="number">PROBLÈME 40</span><span class="tag">Fonctions trigonométriques</span></div>
+      <h3>Fonction tangente 5</h3>
+      <div class="given"><b>Donnée :</b> <span class="formula">tan x=−1</span></div>
+      <ol class="questions"><li>Donner le domaine de définition de tan.</li><li>Calculer tan de l’angle indiqué.</li><li>Rappeler la période de tan.</li><li>Résoudre tan x=0 sur [0,2π[.</li><li>Résoudre tan x=−1 sur [0,2π[.</li><li>Étudier le signe de tan selon les quadrants.</li><li>Donner les équations des asymptotes verticales.</li><li>Tracer une période de la courbe de tangente.</li></ol>
+      <details class="correction"><summary>Voir la correction détaillée</summary><ol class="solutions"><li><strong>Q1.</strong> Df=ℝ\{π/2+kπ ; k∈ℤ}, car cos x≠0.</li><li><strong>Q2.</strong> tan(3π/4)=−1.</li><li><strong>Q3.</strong> La période est π : tan(x+π)=tan x.</li><li><strong>Q4.</strong> tan x=0 ⇔ x=0 ou x=π sur [0,2π[.</li><li><strong>Q5.</strong> Les solutions sont x=3π/4+kπ ; retenir celles dans [0,2π[.</li><li><strong>Q6.</strong> tan est positive quand sin et cos ont le même signe, négative sinon.</li><li><strong>Q7.</strong> x=π/2+kπ, k∈ℤ.</li><li><strong>Q8.</strong> Sur ]−π/2,π/2[, la courbe croît, passe par (0;0), et tend vers −∞ et +∞ aux bords.</li></ol></details>
+      <details class="hint"><summary>Rappel utile pour ce problème</summary><p>tan x=sin x/cos x ; période π ; asymptotes x=π/2+kπ.</p></details>
+    </article>
+    <article class="problem" id="p41" data-chapter="Fonctions trigonométriques">
+      <div class="problem-top"><span class="number">PROBLÈME 41</span><span class="tag">Fonctions trigonométriques</span></div>
+      <h3>Combinaison sinus-cosinus 1</h3>
+      <div class="given"><b>Donnée :</b> <span class="formula">f(x)=1sin x+1cos x+0</span></div>
+      <ol class="questions"><li>Donner le domaine de définition.</li><li>Calculer f(0), f(π/2) et f(π).</li><li>Rappeler les périodes de sin et cos.</li><li>Montrer que 2π est une période de f.</li><li>Donner une majoration et une minoration de f.</li><li>Calculer f′(x).</li><li>Compléter un tableau pour x=0, π/2, π, 3π/2, 2π.</li><li>Tracer la courbe sur [0,2π] à l’aide du tableau.</li></ol>
+      <details class="correction"><summary>Voir la correction détaillée</summary><ol class="solutions"><li><strong>Q1.</strong> Domaine : ℝ.</li><li><strong>Q2.</strong> f(0)=1, f(π/2)=1, f(π)=-1.</li><li><strong>Q3.</strong> sin et cos ont pour période 2π.</li><li><strong>Q4.</strong> f(x+2π)=f(x), donc 2π est une période.</li><li><strong>Q5.</strong> −(1+1)+0 ≤ f(x) ≤ 1+1+0.</li><li><strong>Q6.</strong> f′(x)=1cos x−1sin x.</li><li><strong>Q7.</strong> f(0)=1, f(π/2)=1, f(π)=-1, f(3π/2)=-1, f(2π)=1.</li><li><strong>Q8.</strong> Placer les cinq points puis relier par une courbe sinusoïdale régulière.</li></ol></details>
+      <details class="hint"><summary>Rappel utile pour ce problème</summary><p>(sin x)′=cos x ; (cos x)′=−sin x ; période 2π.</p></details>
+    </article>
+    <article class="problem" id="p42" data-chapter="Fonctions trigonométriques">
+      <div class="problem-top"><span class="number">PROBLÈME 42</span><span class="tag">Fonctions trigonométriques</span></div>
+      <h3>Combinaison sinus-cosinus 2</h3>
+      <div class="given"><b>Donnée :</b> <span class="formula">f(x)=2sin x+0cos x+0</span></div>
+      <ol class="questions"><li>Donner le domaine de définition.</li><li>Calculer f(0), f(π/2) et f(π).</li><li>Rappeler les périodes de sin et cos.</li><li>Montrer que 2π est une période de f.</li><li>Donner une majoration et une minoration de f.</li><li>Calculer f′(x).</li><li>Compléter un tableau pour x=0, π/2, π, 3π/2, 2π.</li><li>Tracer la courbe sur [0,2π] à l’aide du tableau.</li></ol>
+      <details class="correction"><summary>Voir la correction détaillée</summary><ol class="solutions"><li><strong>Q1.</strong> Domaine : ℝ.</li><li><strong>Q2.</strong> f(0)=0, f(π/2)=2, f(π)=0.</li><li><strong>Q3.</strong> sin et cos ont pour période 2π.</li><li><strong>Q4.</strong> f(x+2π)=f(x), donc 2π est une période.</li><li><strong>Q5.</strong> −(2+0)+0 ≤ f(x) ≤ 2+0+0.</li><li><strong>Q6.</strong> f′(x)=2cos x−0sin x.</li><li><strong>Q7.</strong> f(0)=0, f(π/2)=2, f(π)=0, f(3π/2)=-2, f(2π)=0.</li><li><strong>Q8.</strong> Placer les cinq points puis relier par une courbe sinusoïdale régulière.</li></ol></details>
+      <details class="hint"><summary>Rappel utile pour ce problème</summary><p>(sin x)′=cos x ; (cos x)′=−sin x ; période 2π.</p></details>
+    </article>
+    <article class="problem" id="p43" data-chapter="Fonctions trigonométriques">
+      <div class="problem-top"><span class="number">PROBLÈME 43</span><span class="tag">Fonctions trigonométriques</span></div>
+      <h3>Combinaison sinus-cosinus 3</h3>
+      <div class="given"><b>Donnée :</b> <span class="formula">f(x)=1sin x+2cos x+0</span></div>
+      <ol class="questions"><li>Donner le domaine de définition.</li><li>Calculer f(0), f(π/2) et f(π).</li><li>Rappeler les périodes de sin et cos.</li><li>Montrer que 2π est une période de f.</li><li>Donner une majoration et une minoration de f.</li><li>Calculer f′(x).</li><li>Compléter un tableau pour x=0, π/2, π, 3π/2, 2π.</li><li>Tracer la courbe sur [0,2π] à l’aide du tableau.</li></ol>
+      <details class="correction"><summary>Voir la correction détaillée</summary><ol class="solutions"><li><strong>Q1.</strong> Domaine : ℝ.</li><li><strong>Q2.</strong> f(0)=2, f(π/2)=1, f(π)=-2.</li><li><strong>Q3.</strong> sin et cos ont pour période 2π.</li><li><strong>Q4.</strong> f(x+2π)=f(x), donc 2π est une période.</li><li><strong>Q5.</strong> −(1+2)+0 ≤ f(x) ≤ 1+2+0.</li><li><strong>Q6.</strong> f′(x)=1cos x−2sin x.</li><li><strong>Q7.</strong> f(0)=2, f(π/2)=1, f(π)=-2, f(3π/2)=-1, f(2π)=2.</li><li><strong>Q8.</strong> Placer les cinq points puis relier par une courbe sinusoïdale régulière.</li></ol></details>
+      <details class="hint"><summary>Rappel utile pour ce problème</summary><p>(sin x)′=cos x ; (cos x)′=−sin x ; période 2π.</p></details>
+    </article>
+    <article class="problem" id="p44" data-chapter="Fonctions trigonométriques">
+      <div class="problem-top"><span class="number">PROBLÈME 44</span><span class="tag">Fonctions trigonométriques</span></div>
+      <h3>Combinaison sinus-cosinus 4</h3>
+      <div class="given"><b>Donnée :</b> <span class="formula">f(x)=2sin x+1cos x+1</span></div>
+      <ol class="questions"><li>Donner le domaine de définition.</li><li>Calculer f(0), f(π/2) et f(π).</li><li>Rappeler les périodes de sin et cos.</li><li>Montrer que 2π est une période de f.</li><li>Donner une majoration et une minoration de f.</li><li>Calculer f′(x).</li><li>Compléter un tableau pour x=0, π/2, π, 3π/2, 2π.</li><li>Tracer la courbe sur [0,2π] à l’aide du tableau.</li></ol>
+      <details class="correction"><summary>Voir la correction détaillée</summary><ol class="solutions"><li><strong>Q1.</strong> Domaine : ℝ.</li><li><strong>Q2.</strong> f(0)=2, f(π/2)=3, f(π)=0.</li><li><strong>Q3.</strong> sin et cos ont pour période 2π.</li><li><strong>Q4.</strong> f(x+2π)=f(x), donc 2π est une période.</li><li><strong>Q5.</strong> -2 ≤ f(x) ≤ 4.</li><li><strong>Q6.</strong> f′(x)=2cos x−1sin x.</li><li><strong>Q7.</strong> f(0)=2, f(π/2)=3, f(π)=0, f(3π/2)=-1, f(2π)=2.</li><li><strong>Q8.</strong> Placer les cinq points puis relier par une courbe sinusoïdale régulière.</li></ol></details>
+      <details class="hint"><summary>Rappel utile pour ce problème</summary><p>(sin x)′=cos x ; (cos x)′=−sin x ; période 2π.</p></details>
+    </article>
+    <article class="problem" id="p45" data-chapter="Fonctions trigonométriques">
+      <div class="problem-top"><span class="number">PROBLÈME 45</span><span class="tag">Fonctions trigonométriques</span></div>
+      <h3>Combinaison sinus-cosinus 5</h3>
+      <div class="given"><b>Donnée :</b> <span class="formula">f(x)=1sin x+1cos x+2</span></div>
+      <ol class="questions"><li>Donner le domaine de définition.</li><li>Calculer f(0), f(π/2) et f(π).</li><li>Rappeler les périodes de sin et cos.</li><li>Montrer que 2π est une période de f.</li><li>Donner une majoration et une minoration de f.</li><li>Calculer f′(x).</li><li>Compléter un tableau pour x=0, π/2, π, 3π/2, 2π.</li><li>Tracer la courbe sur [0,2π] à l’aide du tableau.</li></ol>
+      <details class="correction"><summary>Voir la correction détaillée</summary><ol class="solutions"><li><strong>Q1.</strong> Domaine : ℝ.</li><li><strong>Q2.</strong> f(0)=3, f(π/2)=3, f(π)=1.</li><li><strong>Q3.</strong> sin et cos ont pour période 2π.</li><li><strong>Q4.</strong> f(x+2π)=f(x), donc 2π est une période.</li><li><strong>Q5.</strong> 0 ≤ f(x) ≤ 4.</li><li><strong>Q6.</strong> f′(x)=1cos x−1sin x.</li><li><strong>Q7.</strong> f(0)=3, f(π/2)=3, f(π)=1, f(3π/2)=1, f(2π)=3.</li><li><strong>Q8.</strong> Placer les cinq points puis relier par une courbe sinusoïdale régulière.</li></ol></details>
+      <details class="hint"><summary>Rappel utile pour ce problème</summary><p>(sin x)′=cos x ; (cos x)′=−sin x ; période 2π.</p></details>
+    </article>
+    <article class="problem" id="p46" data-chapter="Fonctions trigonométriques">
+      <div class="problem-top"><span class="number">PROBLÈME 46</span><span class="tag">Fonctions trigonométriques</span></div>
+      <h3>Fonctions réciproques 1</h3>
+      <div class="given"><b>Donnée :</b> <span class="formula">arcsin(1/2)</span></div>
+      <ol class="questions"><li>Rappeler le sens de arcsin.</li><li>Déterminer arcsin(1/2).</li><li>Préciser l’intervalle principal de arcsin.</li><li>Vérifier que sin(π/6)=1/2.</li><li>Résoudre sin(x)=1/2 sur [0,2π[ si cela s’applique.</li><li>Expliquer la différence entre valeur principale et solutions générales.</li><li>Placer l’angle principal sur le cercle.</li><li>Résumer les formules importantes.</li></ol>
+      <details class="correction"><summary>Voir la correction détaillée</summary><ol class="solutions"><li><strong>Q1.</strong> arcsin(a) est l’angle principal dont l’image par sin vaut a.</li><li><strong>Q2.</strong> arcsin(1/2)=π/6.</li><li><strong>Q3.</strong> Intervalle principal : [−π/2, π/2].</li><li><strong>Q4.</strong> sin(π/6)=1/2, donc l’égalité est vérifiée.</li><li><strong>Q5.</strong> Pour sin x=1/2, utiliser x=α ou π−α ; pour cos x=1/2, utiliser x=±α ; pour tan x=1/2, utiliser x=α+kπ, puis garder les angles de [0,2π[.</li><li><strong>Q6.</strong> La valeur principale est une valeur unique dans l’intervalle choisi ; une équation trigonométrique peut avoir plusieurs solutions.</li><li><strong>Q7.</strong> Placer l’angle sur le cercle et lire les coordonnées (cos x;sin x).</li><li><strong>Q8.</strong> sin²x+cos²x=1 ; tan x=sin x/cos x ; arcsin a∈[−π/2,π/2] ; arccos a∈[0,π] ; arctan a∈]−π/2,π/2[.</li></ol></details>
+      <details class="hint"><summary>Rappel utile pour ce problème</summary><p>arcsin a∈[−π/2,π/2] ; arccos a∈[0,π] ; arctan a∈]−π/2,π/2[.</p></details>
+    </article>
+    <article class="problem" id="p47" data-chapter="Fonctions trigonométriques">
+      <div class="problem-top"><span class="number">PROBLÈME 47</span><span class="tag">Fonctions trigonométriques</span></div>
+      <h3>Fonctions réciproques 2</h3>
+      <div class="given"><b>Donnée :</b> <span class="formula">arccos(1/2)</span></div>
+      <ol class="questions"><li>Rappeler le sens de arccos.</li><li>Déterminer arccos(1/2).</li><li>Préciser l’intervalle principal de arccos.</li><li>Vérifier que cos(π/3)=1/2.</li><li>Résoudre cos(x)=1/2 sur [0,2π[ si cela s’applique.</li><li>Expliquer la différence entre valeur principale et solutions générales.</li><li>Placer l’angle principal sur le cercle.</li><li>Résumer les formules importantes.</li></ol>
+      <details class="correction"><summary>Voir la correction détaillée</summary><ol class="solutions"><li><strong>Q1.</strong> arccos(a) est l’angle principal dont l’image par cos vaut a.</li><li><strong>Q2.</strong> arccos(1/2)=π/3.</li><li><strong>Q3.</strong> Intervalle principal : [0, π].</li><li><strong>Q4.</strong> cos(π/3)=1/2, donc l’égalité est vérifiée.</li><li><strong>Q5.</strong> Pour sin x=1/2, utiliser x=α ou π−α ; pour cos x=1/2, utiliser x=±α ; pour tan x=1/2, utiliser x=α+kπ, puis garder les angles de [0,2π[.</li><li><strong>Q6.</strong> La valeur principale est une valeur unique dans l’intervalle choisi ; une équation trigonométrique peut avoir plusieurs solutions.</li><li><strong>Q7.</strong> Placer l’angle sur le cercle et lire les coordonnées (cos x;sin x).</li><li><strong>Q8.</strong> sin²x+cos²x=1 ; tan x=sin x/cos x ; arcsin a∈[−π/2,π/2] ; arccos a∈[0,π] ; arctan a∈]−π/2,π/2[.</li></ol></details>
+      <details class="hint"><summary>Rappel utile pour ce problème</summary><p>arcsin a∈[−π/2,π/2] ; arccos a∈[0,π] ; arctan a∈]−π/2,π/2[.</p></details>
+    </article>
+    <article class="problem" id="p48" data-chapter="Fonctions trigonométriques">
+      <div class="problem-top"><span class="number">PROBLÈME 48</span><span class="tag">Fonctions trigonométriques</span></div>
+      <h3>Fonctions réciproques 3</h3>
+      <div class="given"><b>Donnée :</b> <span class="formula">arctan(1)</span></div>
+      <ol class="questions"><li>Rappeler le sens de arctan.</li><li>Déterminer arctan(1).</li><li>Préciser l’intervalle principal de arctan.</li><li>Vérifier que tan(π/4)=1.</li><li>Résoudre tan(x)=1 sur [0,2π[ si cela s’applique.</li><li>Expliquer la différence entre valeur principale et solutions générales.</li><li>Placer l’angle principal sur le cercle.</li><li>Résumer les formules importantes.</li></ol>
+      <details class="correction"><summary>Voir la correction détaillée</summary><ol class="solutions"><li><strong>Q1.</strong> arctan(a) est l’angle principal dont l’image par tan vaut a.</li><li><strong>Q2.</strong> arctan(1)=π/4.</li><li><strong>Q3.</strong> Intervalle principal : ]−π/2, π/2[.</li><li><strong>Q4.</strong> tan(π/4)=1, donc l’égalité est vérifiée.</li><li><strong>Q5.</strong> Pour sin x=1, utiliser x=α ou π−α ; pour cos x=1, utiliser x=±α ; pour tan x=1, utiliser x=α+kπ, puis garder les angles de [0,2π[.</li><li><strong>Q6.</strong> La valeur principale est une valeur unique dans l’intervalle choisi ; une équation trigonométrique peut avoir plusieurs solutions.</li><li><strong>Q7.</strong> Placer l’angle sur le cercle et lire les coordonnées (cos x;sin x).</li><li><strong>Q8.</strong> sin²x+cos²x=1 ; tan x=sin x/cos x ; arcsin a∈[−π/2,π/2] ; arccos a∈[0,π] ; arctan a∈]−π/2,π/2[.</li></ol></details>
+      <details class="hint"><summary>Rappel utile pour ce problème</summary><p>arcsin a∈[−π/2,π/2] ; arccos a∈[0,π] ; arctan a∈]−π/2,π/2[.</p></details>
+    </article>
+    <article class="problem" id="p49" data-chapter="Fonctions trigonométriques">
+      <div class="problem-top"><span class="number">PROBLÈME 49</span><span class="tag">Fonctions trigonométriques</span></div>
+      <h3>Fonctions réciproques 4</h3>
+      <div class="given"><b>Donnée :</b> <span class="formula">arcsin(−1/2)</span></div>
+      <ol class="questions"><li>Rappeler le sens de arcsin.</li><li>Déterminer arcsin(−1/2).</li><li>Préciser l’intervalle principal de arcsin.</li><li>Vérifier que sin(−π/6)=−1/2.</li><li>Résoudre sin(x)=−1/2 sur [0,2π[ si cela s’applique.</li><li>Expliquer la différence entre valeur principale et solutions générales.</li><li>Placer l’angle principal sur le cercle.</li><li>Résumer les formules importantes.</li></ol>
+      <details class="correction"><summary>Voir la correction détaillée</summary><ol class="solutions"><li><strong>Q1.</strong> arcsin(a) est l’angle principal dont l’image par sin vaut a.</li><li><strong>Q2.</strong> arcsin(−1/2)=−π/6.</li><li><strong>Q3.</strong> Intervalle principal : [−π/2, π/2].</li><li><strong>Q4.</strong> sin(−π/6)=−1/2, donc l’égalité est vérifiée.</li><li><strong>Q5.</strong> Pour sin x=−1/2, utiliser x=α ou π−α ; pour cos x=−1/2, utiliser x=±α ; pour tan x=−1/2, utiliser x=α+kπ, puis garder les angles de [0,2π[.</li><li><strong>Q6.</strong> La valeur principale est une valeur unique dans l’intervalle choisi ; une équation trigonométrique peut avoir plusieurs solutions.</li><li><strong>Q7.</strong> Placer l’angle sur le cercle et lire les coordonnées (cos x;sin x).</li><li><strong>Q8.</strong> sin²x+cos²x=1 ; tan x=sin x/cos x ; arcsin a∈[−π/2,π/2] ; arccos a∈[0,π] ; arctan a∈]−π/2,π/2[.</li></ol></details>
+      <details class="hint"><summary>Rappel utile pour ce problème</summary><p>arcsin a∈[−π/2,π/2] ; arccos a∈[0,π] ; arctan a∈]−π/2,π/2[.</p></details>
+    </article>
+    <article class="problem" id="p50" data-chapter="Fonctions trigonométriques">
+      <div class="problem-top"><span class="number">PROBLÈME 50</span><span class="tag">Fonctions trigonométriques</span></div>
+      <h3>Fonctions réciproques 5</h3>
+      <div class="given"><b>Donnée :</b> <span class="formula">arccos(−1/2)</span></div>
+      <ol class="questions"><li>Rappeler le sens de arccos.</li><li>Déterminer arccos(−1/2).</li><li>Préciser l’intervalle principal de arccos.</li><li>Vérifier que cos(2π/3)=−1/2.</li><li>Résoudre cos(x)=−1/2 sur [0,2π[ si cela s’applique.</li><li>Expliquer la différence entre valeur principale et solutions générales.</li><li>Placer l’angle principal sur le cercle.</li><li>Résumer les formules importantes.</li></ol>
+      <details class="correction"><summary>Voir la correction détaillée</summary><ol class="solutions"><li><strong>Q1.</strong> arccos(a) est l’angle principal dont l’image par cos vaut a.</li><li><strong>Q2.</strong> arccos(−1/2)=2π/3.</li><li><strong>Q3.</strong> Intervalle principal : [0, π].</li><li><strong>Q4.</strong> cos(2π/3)=−1/2, donc l’égalité est vérifiée.</li><li><strong>Q5.</strong> Pour sin x=−1/2, utiliser x=α ou π−α ; pour cos x=−1/2, utiliser x=±α ; pour tan x=−1/2, utiliser x=α+kπ, puis garder les angles de [0,2π[.</li><li><strong>Q6.</strong> La valeur principale est une valeur unique dans l’intervalle choisi ; une équation trigonométrique peut avoir plusieurs solutions.</li><li><strong>Q7.</strong> Placer l’angle sur le cercle et lire les coordonnées (cos x;sin x).</li><li><strong>Q8.</strong> sin²x+cos²x=1 ; tan x=sin x/cos x ; arcsin a∈[−π/2,π/2] ; arccos a∈[0,π] ; arctan a∈]−π/2,π/2[.</li></ol></details>
+      <details class="hint"><summary>Rappel utile pour ce problème</summary><p>arcsin a∈[−π/2,π/2] ; arccos a∈[0,π] ; arctan a∈]−π/2,π/2[.</p></details>
+    </article>
+ </section>
+
+ <div class="section-title" id="p51"><div><h2>Problèmes mixtes — niveau avancé</h2><p>Ces 12 exercices combinent étude de fonction, identités trigonométriques, dérivées, équations, variations et tracé. Essaie-les sans ouvrir les corrections.</p></div></div>
+ <section class="problem-list" aria-label="Problèmes mixtes difficiles">
+
+    <article class="problem" id="p51" data-chapter="Problèmes mixtes difficiles">
+      <div class="problem-top"><span class="number">PROBLÈME 51</span><span class="tag">Mixte · niveau avancé</span></div>
+      <h3>Somme sinus-cosinus : forme canonique et étude complète</h3>
+      <div class="given"><b>Donnée :</b> <span class="formula">f(x)=sin(x)+cos(x), sur [0 ; 2π].</span></div>
+      <ol class="questions"><li>Déterminer le domaine de définition de f.</li><li>Calculer f(0), f(π/2), f(π) et f(3π/2).</li><li>Montrer que f(x)=√2 sin(x+π/4).</li><li>Calculer f′(x).</li><li>Résoudre f′(x)=0 sur [0 ; 2π].</li><li>Étudier le signe de f′ et dresser le tableau de variation.</li><li>Déterminer le maximum et le minimum de f sur l’intervalle.</li><li>Résoudre f(x)=0 sur [0 ; 2π].</li><li>Résoudre f(x)=1 sur [0 ; 2π].</li><li>Tracer la courbe en indiquant les points remarquables et les extremums.</li></ol>
+      <details class="correction"><summary>Voir la correction expliquée</summary><ol class="solutions"><li><strong>Q1.</strong> f est définie sur ℝ ; l’intervalle d’étude est [0 ; 2π].</li><li><strong>Q2.</strong> f(0)=1 ; f(π/2)=1 ; f(π)=−1 ; f(3π/2)=−1.</li><li><strong>Q3.</strong> √2 sin(x+π/4)=√2(sin x cos π/4+cos x sin π/4)=sin x+cos x.</li><li><strong>Q4.</strong> f′(x)=cos x−sin x.</li><li><strong>Q5.</strong> f′(x)=0 ⇔ cos x=sin x ⇔ x=π/4 ou 5π/4 sur [0 ; 2π].</li><li><strong>Q6.</strong> f′ est positive sur [0 ; π/4[, négative sur ]π/4 ; 5π/4[, puis positive sur ]5π/4 ; 2π].</li><li><strong>Q7.</strong> Maximum √2 atteint en x=π/4 ; minimum −√2 atteint en x=5π/4.</li><li><strong>Q8.</strong> sin x+cos x=0 ⇔ tan x=−1, donc x=3π/4 ou 7π/4.</li><li><strong>Q9.</strong> √2 sin(x+π/4)=1 ⇔ sin(x+π/4)=√2/2 ; donc x=0 ou x=π/2 ou, sur l’intervalle, x=2π (vérifier les bornes) : les solutions distinctes sont 0, π/2 et 2π.</li><li><strong>Q10.</strong> Placer les valeurs aux bornes, les zéros, et les points d’extremum ; relier par une sinusoïde régulière.</li></ol></details>
+      <details class="hint"><summary>Rappel de méthode</summary><p>Commence par le domaine et les identités utiles. Calcule ensuite la dérivée, factorise-la, étudie son signe sur les intervalles séparés par les points critiques, puis vérifie que le tableau de variation concorde avec les valeurs et les limites.</p></details>
+    </article>
+    <article class="problem" id="p52" data-chapter="Problèmes mixtes difficiles">
+      <div class="problem-top"><span class="number">PROBLÈME 52</span><span class="tag">Mixte · niveau avancé</span></div>
+      <h3>Fonction sin(2x) : dérivée, variations et équations</h3>
+      <div class="given"><b>Donnée :</b> <span class="formula">f(x)=sin(2x), sur [0 ; π].</span></div>
+      <ol class="questions"><li>Préciser le domaine de définition.</li><li>Calculer f(0), f(π/4), f(π/2) et f(π).</li><li>Calculer f′(x).</li><li>Résoudre f′(x)=0 sur [0 ; π].</li><li>Étudier le signe de f′ sur l’intervalle.</li><li>Dresser le tableau de variation de f.</li><li>Déterminer le maximum et le minimum.</li><li>Résoudre f(x)=0 sur [0 ; π].</li><li>Résoudre f(x)=1/2 sur [0 ; π].</li><li>Tracer la courbe en marquant les zéros et les extremums.</li></ol>
+      <details class="correction"><summary>Voir la correction expliquée</summary><ol class="solutions"><li><strong>Q1.</strong> f est définie sur ℝ ; on l’étudie sur [0 ; π].</li><li><strong>Q2.</strong> Les valeurs sont 0, 1, 0 et 0.</li><li><strong>Q3.</strong> f′(x)=2cos(2x).</li><li><strong>Q4.</strong> cos(2x)=0 ⇔ 2x=π/2 ou 3π/2, donc x=π/4 ou 3π/4.</li><li><strong>Q5.</strong> f′&gt;0 sur [0 ; π/4[, f′&lt;0 sur ]π/4 ; 3π/4[, puis f′&gt;0 sur ]3π/4 ; π].</li><li><strong>Q6.</strong> f croît de 0 à 1, décroît de 1 à −1, puis croît de −1 à 0.</li><li><strong>Q7.</strong> Maximum 1 en π/4 ; minimum −1 en 3π/4.</li><li><strong>Q8.</strong> sin(2x)=0 ⇔ 2x=kπ, donc x=0, π/2 ou π.</li><li><strong>Q9.</strong> sin(2x)=1/2 donne 2x=π/6 ou 5π/6 ; ainsi x=π/12 ou 5π/12.</li><li><strong>Q10.</strong> Tracer une période comprimée : zéros 0, π/2, π ; sommet (π/4,1) et creux (3π/4,−1).</li></ol></details>
+      <details class="hint"><summary>Rappel de méthode</summary><p>Commence par le domaine et les identités utiles. Calcule ensuite la dérivée, factorise-la, étudie son signe sur les intervalles séparés par les points critiques, puis vérifie que le tableau de variation concorde avec les valeurs et les limites.</p></details>
+    </article>
+    <article class="problem" id="p53" data-chapter="Problèmes mixtes difficiles">
+      <div class="problem-top"><span class="number">PROBLÈME 53</span><span class="tag">Mixte · niveau avancé</span></div>
+      <h3>Combinaison 2cos(x)+1 : signe et intersections</h3>
+      <div class="given"><b>Donnée :</b> <span class="formula">f(x)=2cos(x)+1, sur [0 ; 2π].</span></div>
+      <ol class="questions"><li>Donner le domaine de définition.</li><li>Calculer f(0), f(π/2), f(π) et f(2π).</li><li>Calculer la dérivée f′.</li><li>Résoudre f′(x)=0 sur l’intervalle.</li><li>Établir le tableau de variation.</li><li>Déterminer les valeurs extrêmes.</li><li>Résoudre f(x)=0 sur [0 ; 2π].</li><li>Étudier le signe de f.</li><li>Résoudre f(x)=2 sur [0 ; 2π].</li><li>Tracer la courbe et les intersections avec l’axe des abscisses.</li></ol>
+      <details class="correction"><summary>Voir la correction expliquée</summary><ol class="solutions"><li><strong>Q1.</strong> f est définie sur ℝ.</li><li><strong>Q2.</strong> f(0)=3 ; f(π/2)=1 ; f(π)=−1 ; f(2π)=3.</li><li><strong>Q3.</strong> f′(x)=−2sin x.</li><li><strong>Q4.</strong> f′(x)=0 pour x=0, π et 2π sur l’intervalle fermé.</li><li><strong>Q5.</strong> f décroît sur [0 ; π], puis croît sur [π ; 2π].</li><li><strong>Q6.</strong> Maximum 3 aux bornes 0 et 2π ; minimum −1 en π.</li><li><strong>Q7.</strong> 2cos x+1=0 ⇔ cos x=−1/2, donc x=2π/3 ou 4π/3.</li><li><strong>Q8.</strong> f&gt;0 sur [0 ; 2π/3[ et ]4π/3 ; 2π] ; f&lt;0 sur ]2π/3 ; 4π/3[.</li><li><strong>Q9.</strong> 2cos x+1=2 ⇔ cos x=1/2, donc x=π/3 ou 5π/3.</li><li><strong>Q10.</strong> Courbe de cosinus d’amplitude 2, décalée d’une unité vers le haut ; intersections en x=2π/3 et 4π/3.</li></ol></details>
+      <details class="hint"><summary>Rappel de méthode</summary><p>Commence par le domaine et les identités utiles. Calcule ensuite la dérivée, factorise-la, étudie son signe sur les intervalles séparés par les points critiques, puis vérifie que le tableau de variation concorde avec les valeurs et les limites.</p></details>
+    </article>
+    <article class="problem" id="p54" data-chapter="Problèmes mixtes difficiles">
+      <div class="problem-top"><span class="number">PROBLÈME 54</span><span class="tag">Mixte · niveau avancé</span></div>
+      <h3>Produit trigonométrique et dérivation</h3>
+      <div class="given"><b>Donnée :</b> <span class="formula">f(x)=sin(x)cos(x), sur [0 ; π].</span></div>
+      <ol class="questions"><li>Déterminer le domaine de définition.</li><li>Écrire f sous la forme (1/2)sin(2x).</li><li>Calculer f(0), f(π/4), f(π/2) et f(π).</li><li>Calculer f′(x) à partir du produit.</li><li>Vérifier le résultat avec la forme sin(2x).</li><li>Résoudre f′(x)=0 sur [0 ; π].</li><li>Dresser le tableau de variation.</li><li>Déterminer le maximum et le minimum.</li><li>Résoudre f(x)=0 puis f(x)=1/4.</li><li>Tracer la courbe et expliquer sa symétrie autour de π/2.</li></ol>
+      <details class="correction"><summary>Voir la correction expliquée</summary><ol class="solutions"><li><strong>Q1.</strong> f est définie sur ℝ.</li><li><strong>Q2.</strong> Par l’identité sin(2x)=2sin x cos x, f(x)=½sin(2x).</li><li><strong>Q3.</strong> Les valeurs sont 0, 1/2, 0 et 0.</li><li><strong>Q4.</strong> f′(x)=cos²x−sin²x.</li><li><strong>Q5.</strong> Comme f=½sin(2x), f′=cos(2x), et cos²x−sin²x=cos(2x).</li><li><strong>Q6.</strong> cos(2x)=0 donne x=π/4 ou 3π/4.</li><li><strong>Q7.</strong> f croît de 0 à 1/2, décroît jusqu’à −1/2, puis croît jusqu’à 0.</li><li><strong>Q8.</strong> Maximum 1/2 en π/4 ; minimum −1/2 en 3π/4.</li><li><strong>Q9.</strong> f=0 pour x=0, π/2, π. f=1/4 ⇔ sin(2x)=1/2, donc x=π/12 ou 5π/12.</li><li><strong>Q10.</strong> Comme f(π−x)=−f(x), la courbe présente une symétrie centrale de centre (π/2,0), pas une symétrie axiale.</li></ol></details>
+      <details class="hint"><summary>Rappel de méthode</summary><p>Commence par le domaine et les identités utiles. Calcule ensuite la dérivée, factorise-la, étudie son signe sur les intervalles séparés par les points critiques, puis vérifie que le tableau de variation concorde avec les valeurs et les limites.</p></details>
+    </article>
+    <article class="problem" id="p55" data-chapter="Problèmes mixtes difficiles">
+      <div class="problem-top"><span class="number">PROBLÈME 55</span><span class="tag">Mixte · niveau avancé</span></div>
+      <h3>Deux fonctions : comparer sin(x) et cos(x)</h3>
+      <div class="given"><b>Donnée :</b> <span class="formula">f(x)=sin(x), g(x)=cos(x), sur [0 ; 2π].</span></div>
+      <ol class="questions"><li>Préciser les domaines de f et g.</li><li>Calculer f′ et g′.</li><li>Donner les variations de chacune sur [0 ; 2π].</li><li>Résoudre f(x)=g(x).</li><li>Étudier le signe de f(x)−g(x).</li><li>Déterminer les coordonnées des points d’intersection de leurs courbes.</li><li>Résoudre f(x)+g(x)=0.</li><li>Comparer les maxima et minima de f et g.</li><li>Décrire une méthode pour tracer les deux courbes dans le même repère.</li><li>Expliquer comment le signe de f−g indique la courbe située au-dessus.</li></ol>
+      <details class="correction"><summary>Voir la correction expliquée</summary><ol class="solutions"><li><strong>Q1.</strong> Les deux fonctions sont définies sur ℝ.</li><li><strong>Q2.</strong> f′(x)=cos x ; g′(x)=−sin x.</li><li><strong>Q3.</strong> sin croît sur [−π/2+2kπ, π/2+2kπ] et décroît sur [π/2+2kπ, 3π/2+2kπ] ; cos se déduit de cos x=sin(x+π/2). Sur [0 ; 2π], utiliser les points critiques π/2, 3π/2 pour sin et 0, π, 2π pour cos.</li><li><strong>Q4.</strong> sin x=cos x ⇔ tan x=1, donc x=π/4 ou 5π/4.</li><li><strong>Q5.</strong> sin x−cos x=√2 sin(x−π/4), donc le signe change aux points π/4 et 5π/4 ; il est positif entre π/4 et 5π/4.</li><li><strong>Q6.</strong> Les intersections sont (π/4 ; √2/2) et (5π/4 ; −√2/2).</li><li><strong>Q7.</strong> sin x+cos x=0 ⇔ x=3π/4 ou 7π/4.</li><li><strong>Q8.</strong> Les deux fonctions ont maximum 1 et minimum −1, mais à des abscisses différentes.</li><li><strong>Q9.</strong> Tracer d’abord les points usuels 0, π/2, π, 3π/2, 2π puis relier en sinusoïdes régulières.</li><li><strong>Q10.</strong> Si f−g&gt;0, la courbe de f est au-dessus de celle de g ; si f−g&lt;0, elle est en dessous.</li></ol></details>
+      <details class="hint"><summary>Rappel de méthode</summary><p>Commence par le domaine et les identités utiles. Calcule ensuite la dérivée, factorise-la, étudie son signe sur les intervalles séparés par les points critiques, puis vérifie que le tableau de variation concorde avec les valeurs et les limites.</p></details>
+    </article>
+    <article class="problem" id="p56" data-chapter="Problèmes mixtes difficiles">
+      <div class="problem-top"><span class="number">PROBLÈME 56</span><span class="tag">Mixte · niveau avancé</span></div>
+      <h3>Amplitude et phase : 2sin(x)+cos(x)</h3>
+      <div class="given"><b>Donnée :</b> <span class="formula">f(x)=2sin(x)+cos(x), sur [0 ; 2π].</span></div>
+      <ol class="questions"><li>Déterminer le domaine de f.</li><li>Calculer f′(x).</li><li>Écrire f(x)=√5 sin(x+φ), avec cos φ=2/√5 et sin φ=1/√5.</li><li>Déterminer φ dans ]0 ; π/2[.</li><li>Résoudre f′(x)=0 sur [0 ; 2π].</li><li>Donner le maximum et le minimum de f.</li><li>Résoudre f(x)=0 sur [0 ; 2π].</li><li>Résoudre f(x)=1 sur l’intervalle (les réponses peuvent être exprimées avec φ).</li><li>Construire le tableau de variation à l’aide de la phase.</li><li>Tracer la sinusoïde et indiquer son amplitude et son décalage.</li></ol>
+      <details class="correction"><summary>Voir la correction expliquée</summary><ol class="solutions"><li><strong>Q1.</strong> f est définie sur ℝ.</li><li><strong>Q2.</strong> f′(x)=2cos x−sin x.</li><li><strong>Q3.</strong> √5 sin(x+φ)=√5(sin x cosφ+cos x sinφ)=2sin x+cos x.</li><li><strong>Q4.</strong> φ=arctan(1/2), environ 0,464 radian.</li><li><strong>Q5.</strong> f′=0 ⇔ tan x=2 ; solutions x=arctan 2 et x=π+arctan 2.</li><li><strong>Q6.</strong> Amplitude √5 : maximum √5 en x=π/2−φ ; minimum −√5 en x=3π/2−φ.</li><li><strong>Q7.</strong> √5 sin(x+φ)=0 ⇔ x+φ=kπ ; garder les x dans [0 ; 2π].</li><li><strong>Q8.</strong> sin(x+φ)=1/√5 ; les solutions s’obtiennent avec x+φ=arcsin(1/√5)+2kπ ou π−arcsin(1/√5)+2kπ, puis en gardant celles de l’intervalle.</li><li><strong>Q9.</strong> Le maximum survient quand x+φ=π/2 ; le minimum quand x+φ=3π/2. Entre ces points, le sens de variation suit celui du sinus.</li><li><strong>Q10.</strong> Amplitude √5, période 2π, décalage horizontal de φ vers la gauche.</li></ol></details>
+      <details class="hint"><summary>Rappel de méthode</summary><p>Commence par le domaine et les identités utiles. Calcule ensuite la dérivée, factorise-la, étudie son signe sur les intervalles séparés par les points critiques, puis vérifie que le tableau de variation concorde avec les valeurs et les limites.</p></details>
+    </article>
+    <article class="problem" id="p57" data-chapter="Problèmes mixtes difficiles">
+      <div class="problem-top"><span class="number">PROBLÈME 57</span><span class="tag">Mixte · niveau avancé</span></div>
+      <h3>Fonction composée : sin²(x)+cos(x)</h3>
+      <div class="given"><b>Donnée :</b> <span class="formula">f(x)=sin²(x)+cos(x), sur [0 ; 2π].</span></div>
+      <ol class="questions"><li>Donner le domaine de définition.</li><li>Transformer f en une expression polynomiale en cos(x).</li><li>Calculer f(0), f(π/2), f(π) et f(2π).</li><li>Calculer f′(x).</li><li>Factoriser f′(x).</li><li>Résoudre f′(x)=0 sur [0 ; 2π].</li><li>Étudier le signe de f′ et les variations.</li><li>Déterminer les extremums absolus.</li><li>Résoudre f(x)=0.</li><li>Préparer un tableau de valeurs et tracer la courbe.</li></ol>
+      <details class="correction"><summary>Voir la correction expliquée</summary><ol class="solutions"><li><strong>Q1.</strong> f est définie sur ℝ.</li><li><strong>Q2.</strong> sin²x=1−cos²x, donc f(x)=1+cos x−cos²x.</li><li><strong>Q3.</strong> f(0)=1 ; f(π/2)=1 ; f(π)=−1 ; f(2π)=1.</li><li><strong>Q4.</strong> f′(x)=2sin x cos x−sin x.</li><li><strong>Q5.</strong> f′(x)=sin x(2cos x−1).</li><li><strong>Q6.</strong> sin x=0 donne 0, π, 2π ; cos x=1/2 donne π/3 et 5π/3.</li><li><strong>Q7.</strong> Étudier le signe des deux facteurs sur les intervalles délimités par π/3, π, 5π/3 ; utiliser aussi les bornes 0 et 2π.</li><li><strong>Q8.</strong> Aux points critiques : f(π)=−1 ; f(π/3)=f(5π/3)=5/4. Le maximum absolu est 5/4 et le minimum absolu −1.</li><li><strong>Q9.</strong> 1+cos x−cos²x=0 ⇔ cos²x−cos x−1=0. L’unique racine admissible est cos x=(1−√5)/2 ; les solutions sont x=arccos((1−√5)/2) et 2π−arccos((1−√5)/2).</li><li><strong>Q10.</strong> Utiliser les points critiques et les zéros calculés ; ajouter quelques valeurs intermédiaires pour dessiner la courbe sans segments droits.</li></ol></details>
+      <details class="hint"><summary>Rappel de méthode</summary><p>Commence par le domaine et les identités utiles. Calcule ensuite la dérivée, factorise-la, étudie son signe sur les intervalles séparés par les points critiques, puis vérifie que le tableau de variation concorde avec les valeurs et les limites.</p></details>
+    </article>
+    <article class="problem" id="p58" data-chapter="Problèmes mixtes difficiles">
+      <div class="problem-top"><span class="number">PROBLÈME 58</span><span class="tag">Mixte · niveau avancé</span></div>
+      <h3>Étude par substitution : cos²(x)−sin(x)</h3>
+      <div class="given"><b>Donnée :</b> <span class="formula">f(x)=cos²(x)−sin(x), sur [−π/2 ; 3π/2].</span></div>
+      <ol class="questions"><li>Préciser le domaine de définition.</li><li>Écrire f uniquement en fonction de sin(x).</li><li>Calculer f′(x).</li><li>Factoriser f′(x).</li><li>Résoudre f′(x)=0 sur l’intervalle.</li><li>Construire le tableau de signe de f′.</li><li>Déterminer les extremums sur l’intervalle.</li><li>Résoudre f(x)=0 en posant t=sin(x).</li><li>Étudier le signe de f.</li><li>Tracer la courbe avec les points critiques.</li></ol>
+      <details class="correction"><summary>Voir la correction expliquée</summary><ol class="solutions"><li><strong>Q1.</strong> f est définie sur ℝ.</li><li><strong>Q2.</strong> cos²x=1−sin²x, donc f(x)=1−sin²x−sin x.</li><li><strong>Q3.</strong> f′(x)=−2sin x cos x−cos x.</li><li><strong>Q4.</strong> f′(x)=−cos x(2sin x+1).</li><li><strong>Q5.</strong> cos x=0 donne x=−π/2, π/2, 3π/2 ; sin x=−1/2 donne x=−π/6 et 7π/6 dans l’intervalle.</li><li><strong>Q6.</strong> Le signe se déduit des facteurs −cos x et 2sin x+1 sur les intervalles séparés par −π/6, π/2, 7π/6 ; les bornes sont aussi à considérer.</li><li><strong>Q7.</strong> f(−π/2)=1 ; f(−π/6)=5/4 ; f(π/2)=−1 ; f(7π/6)=5/4 ; f(3π/2)=1. Minimum −1 en π/2 ; maximum 5/4 en −π/6 et 7π/6.</li><li><strong>Q8.</strong> t²+t−1=0, donc t=(−1±√5)/2. Seule t=(√5−1)/2 appartient à [−1,1]. Résoudre sin x=(√5−1)/2 sur l’intervalle.</li><li><strong>Q9.</strong> Comme f=1−sin²x−sin x, le signe dépend de la position de sin x par rapport à (√5−1)/2 ; l’étude des zéros permet de conclure intervalle par intervalle.</li><li><strong>Q10.</strong> Marquer les bornes, les points critiques et les zéros ; respecter le tableau de variation établi.</li></ol></details>
+      <details class="hint"><summary>Rappel de méthode</summary><p>Commence par le domaine et les identités utiles. Calcule ensuite la dérivée, factorise-la, étudie son signe sur les intervalles séparés par les points critiques, puis vérifie que le tableau de variation concorde avec les valeurs et les limites.</p></details>
+    </article>
+    <article class="problem" id="p59" data-chapter="Problèmes mixtes difficiles">
+      <div class="problem-top"><span class="number">PROBLÈME 59</span><span class="tag">Mixte · niveau avancé</span></div>
+      <h3>Quotient trigonométrique : tan(x) et asymptotes</h3>
+      <div class="given"><b>Donnée :</b> <span class="formula">f(x)=sin(x)/cos(x)=tan(x), sur ]−π/2 ; π/2[.</span></div>
+      <ol class="questions"><li>Déterminer le domaine de la fonction tangente.</li><li>Expliquer pourquoi les bornes ne font pas partie du domaine.</li><li>Calculer f(0), f(π/4) et f(−π/4).</li><li>Calculer f′(x).</li><li>Étudier le signe de f′.</li><li>Calculer les limites aux deux bornes de l’intervalle.</li><li>Déduire les asymptotes éventuelles.</li><li>Résoudre tan(x)=1 sur l’intervalle.</li><li>Résoudre tan(x)=−√3 sur l’intervalle.</li><li>Tracer la courbe et préciser sa période.</li></ol>
+      <details class="correction"><summary>Voir la correction expliquée</summary><ol class="solutions"><li><strong>Q1.</strong> tan x est définie lorsque cos x≠0 ; domaine général ℝ\{π/2+kπ, k∈ℤ}.</li><li><strong>Q2.</strong> Aux bornes ±π/2, cos x=0 : le quotient n’est pas défini.</li><li><strong>Q3.</strong> Les valeurs sont 0, 1 et −1.</li><li><strong>Q4.</strong> f′(x)=1/cos²x.</li><li><strong>Q5.</strong> f′(x)&gt;0 partout où la fonction est définie ; f est strictement croissante sur l’intervalle.</li><li><strong>Q6.</strong> limite en −π/2⁺ =−∞ et limite en π/2⁻ =+∞.</li><li><strong>Q7.</strong> Les droites x=−π/2 et x=π/2 sont des asymptotes verticales.</li><li><strong>Q8.</strong> tan x=1 donne x=π/4 dans l’intervalle.</li><li><strong>Q9.</strong> tan x=−√3 donne x=−π/3 dans l’intervalle.</li><li><strong>Q10.</strong> La courbe est croissante, passe par l’origine, et sa période est π.</li></ol></details>
+      <details class="hint"><summary>Rappel de méthode</summary><p>Commence par le domaine et les identités utiles. Calcule ensuite la dérivée, factorise-la, étudie son signe sur les intervalles séparés par les points critiques, puis vérifie que le tableau de variation concorde avec les valeurs et les limites.</p></details>
+    </article>
+    <article class="problem" id="p60" data-chapter="Problèmes mixtes difficiles">
+      <div class="problem-top"><span class="number">PROBLÈME 60</span><span class="tag">Mixte · niveau avancé</span></div>
+      <h3>Quotient transformé : sin(x)/(1+cos(x))</h3>
+      <div class="given"><b>Donnée :</b> <span class="formula">f(x)=sin(x)/(1+cos(x)), sur ]−π ; π[.</span></div>
+      <ol class="questions"><li>Déterminer le domaine de définition.</li><li>Identifier les valeurs qui annulent le dénominateur.</li><li>Montrer que f(x)=tan(x/2) sur son domaine.</li><li>Calculer f′(x) directement avec la formule du quotient.</li><li>Montrer que f′(x)=1/(1+cos x).</li><li>Étudier le signe de la dérivée.</li><li>Calculer les limites en −π⁺ et π⁻.</li><li>Résoudre f(x)=1 sur ]−π ; π[.</li><li>Résoudre f(x)=−1 sur l’intervalle.</li><li>Tracer la courbe et expliquer le rôle du domaine.</li></ol>
+      <details class="correction"><summary>Voir la correction expliquée</summary><ol class="solutions"><li><strong>Q1.</strong> 1+cos x=0 lorsque x=π+2kπ ; sur ]−π ; π[, le dénominateur ne s’annule pas à l’intérieur. Le domaine est ]−π ; π[.</li><li><strong>Q2.</strong> Le dénominateur s’annule pour x=±π aux bornes considérées.</li><li><strong>Q3.</strong> En multipliant le numérateur et le dénominateur par 1−cos x, on obtient sin x/(1+cos x)=sin x(1−cos x)/sin²x=(1−cos x)/sin x=tan(x/2), pour les x où ces expressions sont définies.</li><li><strong>Q4.</strong> f′=[cos x(1+cos x)+sin²x]/(1+cos x)².</li><li><strong>Q5.</strong> Le numérateur vaut cos x+cos²x+sin²x=1+cos x, donc f′=1/(1+cos x).</li><li><strong>Q6.</strong> Sur ]−π ; π[, 1+cos x&gt;0 ; donc f est strictement croissante.</li><li><strong>Q7.</strong> f(x)=tan(x/2), donc les limites sont −∞ en −π⁺ et +∞ en π⁻.</li><li><strong>Q8.</strong> tan(x/2)=1 ⇔ x/2=π/4+kπ ; dans l’intervalle, x=π/2.</li><li><strong>Q9.</strong> tan(x/2)=−1 ⇔ x/2=−π/4+kπ ; dans l’intervalle, x=−π/2.</li><li><strong>Q10.</strong> Courbe croissante de type tangente ; les droites x=−π et x=π sont des asymptotes verticales pour cette restriction.</li></ol></details>
+      <details class="hint"><summary>Rappel de méthode</summary><p>Commence par le domaine et les identités utiles. Calcule ensuite la dérivée, factorise-la, étudie son signe sur les intervalles séparés par les points critiques, puis vérifie que le tableau de variation concorde avec les valeurs et les limites.</p></details>
+    </article>
+    <article class="problem" id="p61" data-chapter="Problèmes mixtes difficiles">
+      <div class="problem-top"><span class="number">PROBLÈME 61</span><span class="tag">Mixte · niveau avancé</span></div>
+      <h3>Problème de synthèse : équation, dérivée et représentation</h3>
+      <div class="given"><b>Donnée :</b> <span class="formula">f(x)=sin(x)+cos(2x), sur [0 ; 2π].</span></div>
+      <ol class="questions"><li>Préciser le domaine de définition.</li><li>Calculer f(0), f(π/2), f(π) et f(3π/2).</li><li>Calculer f′(x).</li><li>Factoriser f′(x) en utilisant sin(2x)=2sin x cos x.</li><li>Résoudre f′(x)=0 sur [0 ; 2π].</li><li>Étudier le signe de f′ et construire le tableau de variation.</li><li>Résoudre f(x)=0 en utilisant cos(2x)=1−2sin²x.</li><li>Résoudre f(x)=1.</li><li>Comparer la courbe de f avec la droite y=1 et déterminer les intersections.</li><li>Rédiger une synthèse de l’étude : domaine, variations, zéros, extremums et allure.</li></ol>
+      <details class="correction"><summary>Voir la correction expliquée</summary><ol class="solutions"><li><strong>Q1.</strong> f est définie sur ℝ.</li><li><strong>Q2.</strong> f(0)=1 ; f(π/2)=−2 ; f(π)=1 ; f(3π/2)=0.</li><li><strong>Q3.</strong> f′(x)=cos x−2sin(2x).</li><li><strong>Q4.</strong> f′(x)=cos x−4sin x cos x=cos x(1−4sin x).</li><li><strong>Q5.</strong> cos x=0 donne π/2 et 3π/2. sin x=1/4 donne x=α ou π−α, avec α=arcsin(1/4). Les quatre solutions sont donc α, π/2, π−α et 3π/2.</li><li><strong>Q6.</strong> Construire le signe de chaque facteur cos x et 1−4sin x entre les points critiques, puis reporter les sens de variation.</li><li><strong>Q7.</strong> sin x+1−2sin²x=0 ⇔ 2s²−s−1=0 avec s=sin x. Donc s=1 ou s=−1/2. Les solutions sont x=π/2, 7π/6 et 11π/6.</li><li><strong>Q8.</strong> sin x+cos 2x=1 ⇔ sin x−2sin²x=0 ⇔ sin x(1−2sin x)=0. Donc x=0, π, 2π, π/6 et 5π/6.</li><li><strong>Q9.</strong> Les intersections avec y=1 sont les solutions de f(x)=1 : (0,1), (π/6,1), (5π/6,1), (π,1) et (2π,1).</li><li><strong>Q10.</strong> Utiliser les valeurs calculées, les zéros et le tableau de variations ; tracer une courbe lisse, sans relier les points par segments.</li></ol></details>
+      <details class="hint"><summary>Rappel de méthode</summary><p>Commence par le domaine et les identités utiles. Calcule ensuite la dérivée, factorise-la, étudie son signe sur les intervalles séparés par les points critiques, puis vérifie que le tableau de variation concorde avec les valeurs et les limites.</p></details>
+    </article>
+    <article class="problem" id="p62" data-chapter="Problèmes mixtes difficiles">
+      <div class="problem-top"><span class="number">PROBLÈME 62</span><span class="tag">Mixte · niveau avancé</span></div>
+      <h3>Défi final : étude de sin²(x)+sin(x)cos(x)</h3>
+      <div class="given"><b>Donnée :</b> <span class="formula">f(x)=sin²(x)+sin(x)cos(x), sur [0 ; 2π].</span></div>
+      <ol class="questions"><li>Déterminer le domaine de définition.</li><li>Transformer f à l’aide des formules d’angle double.</li><li>Calculer f′(x).</li><li>Établir une forme factorisée de f′.</li><li>Résoudre f′(x)=0 sur [0 ; 2π].</li><li>Construire le tableau de variation.</li><li>Déterminer les valeurs extrêmes en utilisant la forme trigonométrique.</li><li>Résoudre f(x)=0.</li><li>Résoudre f(x)=1.</li><li>Réaliser une étude complète et tracer la courbe avec tableau de variations et intersections.</li></ol>
+      <details class="correction"><summary>Voir la correction expliquée</summary><ol class="solutions"><li><strong>Q1.</strong> f est définie sur ℝ.</li><li><strong>Q2.</strong> sin²x=(1−cos 2x)/2 et sin x cos x=sin 2x/2, donc f=(1−cos 2x+sin 2x)/2.</li><li><strong>Q3.</strong> f′(x)=2sin x cos x+cos²x−sin²x=sin 2x+cos 2x.</li><li><strong>Q4.</strong> f′(x)=√2 sin(2x+π/4).</li><li><strong>Q5.</strong> f′=0 ⇔ 2x+π/4=kπ ; donc x=3π/8+kπ/2. Sur [0 ; 2π] : 3π/8, 7π/8, 11π/8, 15π/8.</li><li><strong>Q6.</strong> Le signe de f′ alterne aux quatre points critiques ; f croît quand sin(2x+π/4)&gt;0 et décroît quand il est négatif.</li><li><strong>Q7.</strong> f=(1+√2 sin(2x−π/4))/2. Maximum (1+√2)/2 ; minimum (1−√2)/2.</li><li><strong>Q8.</strong> f=sin x(sin x+cos x)=0, donc x=0, π, 2π, 3π/4 et 7π/4.</li><li><strong>Q9.</strong> f=1 ⇔ sin 2x−cos 2x=1 ⇔ sin(2x−π/4)=√2/2. Sur [0 ; 2π], les solutions sont x=π/4, π/2, 5π/4 et 3π/2.</li><li><strong>Q10.</strong> Présenter le domaine, la dérivée factorisée, les quatre points critiques, les extremums, les zéros et un tracé cohérent avec le tableau de variation.</li></ol></details>
+      <details class="hint"><summary>Rappel de méthode</summary><p>Commence par le domaine et les identités utiles. Calcule ensuite la dérivée, factorise-la, étudie son signe sur les intervalles séparés par les points critiques, puis vérifie que le tableau de variation concorde avec les valeurs et les limites.</p></details>
+    </article>
+ </section>
+
+</main>
+<footer><b>MathLab</b> · Réviser, comprendre, progresser.<br>62 problèmes · parcours progressif et défis mixtes · page autonome HTML/CSS, utilisable hors ligne.</footer>
+</body></html>
